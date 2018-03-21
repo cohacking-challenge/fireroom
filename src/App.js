@@ -6,7 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Jane Doe',
+      name: 'John Doe',
     };
   }
   render() {
