@@ -42,6 +42,7 @@ class FireContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { snapshot: null };
+    this.saveSnapshot = this.saveSnapshot.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     // Undocumented isEqual
@@ -55,9 +56,9 @@ class FireContainer extends Component {
   componentWillUnmount() {
     this.unsync();
   }
-  saveSnapshot = snapshot => {
+  saveSnapshot(snapshot) {
     this.setState({ snapshot });
-  };
+  }
   sync(dbRef) {
     this.unsync();
     this.unsync = dbRef.onSnapshot(this.saveSnapshot);
