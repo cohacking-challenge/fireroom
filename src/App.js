@@ -8,6 +8,7 @@ import {
   NavLink,
 } from 'react-router-dom';
 import Signup from './components/Signup';
+import { DatePicker } from 'antd';
 
 const Home = () => (
   <div>
@@ -45,6 +46,7 @@ class App extends Component {
             </ul>
 
             <hr />
+            <DatePicker />
             <Route exact path="/" component={Home} />
             <Route exact path="/signup" component={Signup} />
           </div>
