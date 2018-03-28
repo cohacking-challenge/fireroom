@@ -17,7 +17,7 @@ class Content extends Component {
         />
         <QuizTemplatesListContainer />
 
-        <div style={{ display: 'none' }}>
+        <div style={{ display: 'block' }}>
           <FireContainer
             dbRef={db.collection('questions').doc('0yNwV7pbYVOOaM4QwQKc')}
           >
