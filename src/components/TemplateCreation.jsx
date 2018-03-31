@@ -124,8 +124,8 @@ class TemplateCreation extends Component {
                   <br />
                 </div>
               ) : (
-                <h3> Question</h3>
-              )}
+                  <h3> Question</h3>
+                )}
               {this.props.template.pages[pageId].type === 'QUESTION' &&
                 this.props.template.pages[pageId].answers &&
                 this.props.template.pages[pageId].answers.map(
@@ -174,9 +174,12 @@ class TemplateCreation extends Component {
                     </div>
                   ),
                 )}
-              <button onClick={e => this.addNewAnswer(pageId)}>
-                Add new answer
-              </button>
+              {this.props.template.pages[pageId].type === 'QUESTION' && (
+                <button onClick={e => this.addNewAnswer(pageId)}>
+                  Add new answer
+                </button>
+              )}
+              <br />
               <button onClick={e => this.deletePage(pageId)}>
                 Delete page
               </button>
