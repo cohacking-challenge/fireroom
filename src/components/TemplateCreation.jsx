@@ -60,6 +60,29 @@ class TemplateCreation extends Component {
       .set({ pages: newPages }, { merge: true });
   }
 
+  addNewAnswer(pageId) {
+    let newPages = this.props.template.pages;
+
+    newPages[pageId].answers.push({
+      isCorrect: false,
+      label: 'Answer...',
+    });
+
+    db
+      .collection('templates')
+      .doc(this.props.template.__id)
+      .set({ pages: newPages }, { merge: true });
+  }
+
+  deleteAnswer(pageId, answerId) {
+    let newPages = this.props.template.pages;
+    newPages[pageId].answers.splice(answerId, 1);
+    db
+      .collection('templates')
+      .doc(this.props.template.__id)
+      .set({ pages: newPages }, { merge: true });
+  }
+
   render() {
     return (
       <div className="TemplateCreation">
@@ -96,7 +119,15 @@ class TemplateCreation extends Component {
                 value={this.props.template.pages[pageId].title}
               />
               <br />
-              {this.props.template.pages[pageId].answers &&
+              {this.props.template.pages[pageId].type === 'OPEN_CHAT' ? (
+                <div>
+                  <br />
+                </div>
+              ) : (
+                <h3> Question</h3>
+              )}
+              {this.props.template.pages[pageId].type === 'QUESTION' &&
+                this.props.template.pages[pageId].answers &&
                 this.props.template.pages[pageId].answers.map(
                   (answer, answerId) => (
                     <div key={answerId}>
@@ -135,10 +166,20 @@ class TemplateCreation extends Component {
                             .isCorrect
                         }
                       />
+                      <button
+                        onClick={e => this.deleteAnswer(pageId, answerId)}
+                      >
+                        Delete answer
+                      </button>
                     </div>
                   ),
                 )}
-              <button onClick={e => this.deletePage(pageId)}>Delete</button>
+              <button onClick={e => this.addNewAnswer(pageId)}>
+                Add new answer
+              </button>
+              <button onClick={e => this.deletePage(pageId)}>
+                Delete page
+              </button>
             </div>
           ))}
         <hr />
