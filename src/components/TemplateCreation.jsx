@@ -8,19 +8,26 @@ class TemplateCreation extends Component {
     this.deletePage = this.deletePage.bind(this);
   }
   handleChange(event, ...fields) {
+    let targetValue;
+    if (event.target.type === 'checkbox') {
+      targetValue = event.target.checked;
+    } else {
+      targetValue = event.target.value;
+    }
+
     // Try to modify the value document[fields[0]]...[fields[n-1]]
     let newValue;
     if (fields.length === 0) {
       return;
     } else if (fields.length === 1) {
-      newValue = event.target.value;
+      newValue = targetValue;
     } else {
       newValue = this.props.template[fields[0]];
       let cursor = newValue;
       for (let i = 1; i < fields.length - 1; i++) {
         cursor = cursor[fields[i]];
       }
-      cursor[fields[fields.length - 1]] = event.target.value;
+      cursor[fields[fields.length - 1]] = targetValue;
     }
     db
       .collection('templates')
@@ -32,10 +39,10 @@ class TemplateCreation extends Component {
     let newPages = this.props.template.pages;
     newPages.push({
       title: 'Question title',
-      type: 'OPEN_CHAT',
+      type: 'QUESTION',
       answers: Array(4).fill({
         label: 'Answer...',
-        isCorrect: true,
+        isCorrect: false,
       }),
     });
     db
@@ -58,7 +65,7 @@ class TemplateCreation extends Component {
       <div className="TemplateCreation">
         <h2>Hello TemplateCreation</h2>
         <p>This component is here to edit one specific Template!</p>
-        <p>{JSON.stringify(this.props.template)}</p>
+        <pre>{JSON.stringify(this.props.template, null, 2)}</pre>
         Name <br />
         <input
           type="text"
@@ -109,6 +116,23 @@ class TemplateCreation extends Component {
                         value={
                           this.props.template.pages[pageId].answers[answerId]
                             .label
+                        }
+                      />
+                      <input
+                        type="checkbox"
+                        onChange={e => {
+                          this.handleChange(
+                            e,
+                            'pages',
+                            pageId,
+                            'answers',
+                            answerId,
+                            'isCorrect',
+                          );
+                        }}
+                        checked={
+                          this.props.template.pages[pageId].answers[answerId]
+                            .isCorrect
                         }
                       />
                     </div>
