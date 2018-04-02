@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 import Main from './components/Main';
 import Room from './components/Room';
+import Chat from './components/Chat';
 import { DatePicker } from 'antd';
 
 const Home = () => (
@@ -19,12 +20,6 @@ const Home = () => (
 );
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: 'Jane Doe',
-    };
-  }
   render() {
     return (
       <div className="App">

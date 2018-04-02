@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from '../logo.svg';
 import { Route, NavLink } from 'react-router-dom';
 import Signup from './Signup';
+import Chat from './Chat';
 
 const Home = () => (
   <div>
@@ -10,12 +11,6 @@ const Home = () => (
 );
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: 'Jane Doe',
-    };
-  }
   render() {
     return (
       <div className="Main">
@@ -45,11 +40,17 @@ class Main extends Component {
                 Room 42
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/chat" activeStyle={{ fontWeight: 'bold' }}>
+                Chat
+              </NavLink>
+            </li>
           </ul>
 
           <hr />
           <Route exact path="/" component={Home} />
           <Route exact path="/signup" component={Signup} />
+          <Route exact path="/chat" component={Chat} />
         </div>
       </div>
     );
