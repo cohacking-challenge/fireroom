@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
 import { Route, NavLink } from 'react-router-dom';
-import Signup from './Signup';
-import Chat from './Chat';
-import TemplateCreationContainer from './TemplateCreationContainer';
-
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-);
+import Signup from '../views/Signup';
+import Chat from '../views/Chat';
+import TemplateCreationContainer from '../components/TemplateCreationContainer';
+import logo from '../logo.svg';
 
 class Main extends Component {
   render() {
@@ -26,11 +20,6 @@ class Main extends Component {
         </header>
         <div>
           <ul>
-            <li>
-              <NavLink exact to="/" activeStyle={{ fontWeight: 'bold' }}>
-                Home
-              </NavLink>
-            </li>
             <li>
               <NavLink to="/signup" activeStyle={{ fontWeight: 'bold' }}>
                 Signup (not connected to Firebase)
@@ -57,7 +46,6 @@ class Main extends Component {
           </ul>
 
           <hr />
-          <Route exact path="/" component={Home} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/chat" component={Chat} />
           <Route

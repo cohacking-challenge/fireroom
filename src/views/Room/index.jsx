@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
-import QuestionPage from './QuestionPage';
-import questionStatuses from '../enums/questionStatuses';
-import './Room.css';
+import QuestionPage from '../../components/QuestionPage';
+import questionStatuses from '../../enums/questionStatuses';
+
+import './style.css';
 
 /**
  * Component to handle all the logic of a room
