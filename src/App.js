@@ -12,6 +12,9 @@ import Main from './components/Main';
 import Room from './components/Room';
 import Chat from './components/Chat';
 import { DatePicker } from 'antd';
+import Content from './Content';
+import TemplateCreation from './components/TemplateCreation';
+import TemplateCreationContainer from './components/TemplateCreationContainer';
 
 const Home = () => (
   <div>

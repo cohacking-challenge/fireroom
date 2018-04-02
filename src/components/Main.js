@@ -3,6 +3,7 @@ import logo from '../logo.svg';
 import { Route, NavLink } from 'react-router-dom';
 import Signup from './Signup';
 import Chat from './Chat';
+import TemplateCreationContainer from './TemplateCreationContainer';
 
 const Home = () => (
   <div>
@@ -21,7 +22,7 @@ class Main extends Component {
             alt="logo"
             style={{ height: 60 }}
           />
-          <h1 className="Main-title">Welcome to React</h1>
+          <h1 className="Main-title">Welcome to Fireroom</h1>
         </header>
         <div>
           <ul>
@@ -32,17 +33,25 @@ class Main extends Component {
             </li>
             <li>
               <NavLink to="/signup" activeStyle={{ fontWeight: 'bold' }}>
-                Signup
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/rooms/42" activeStyle={{ fontWeight: 'bold' }}>
-                Room 42
+                Signup (not connected to Firebase)
               </NavLink>
             </li>
             <li>
               <NavLink to="/chat" activeStyle={{ fontWeight: 'bold' }}>
-                Chat
+                Chat test
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/admin/templates/123"
+                activeStyle={{ fontWeight: 'bold' }}
+              >
+                Edit Template 123
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/rooms/42" activeStyle={{ fontWeight: 'bold' }}>
+                Room 42 (not connected to Firebase)
               </NavLink>
             </li>
           </ul>
@@ -51,6 +60,11 @@ class Main extends Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/chat" component={Chat} />
+          <Route
+            exact
+            path="/admin/templates/:templateId"
+            component={TemplateCreationContainer}
+          />
         </div>
       </div>
     );
