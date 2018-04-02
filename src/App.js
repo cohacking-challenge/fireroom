@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Main from './views/Main';
-import Room from './views/Room';
+import Main from 'views/Main';
+import Room from 'views/Room';
 
 import './App.css';
 

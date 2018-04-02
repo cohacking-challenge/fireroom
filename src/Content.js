@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import Question from './components/Question';
-import QuizTemplateBuilder from './components/QuizTemplateBuilder';
-import FireContainer from './components/FireContainer';
-import db from './firebase/db';
-import QuizTemplatesListContainer from './components/QuizTemplatesListContainer';
+import Question from 'components/Question';
+import QuizTemplateBuilder from 'components/QuizTemplateBuilder';
+import FireContainer from 'components/FireContainer';
+import db from 'backend/db';
+import QuizTemplatesListContainer from 'components/QuizTemplatesListContainer';
 
 class Content extends Component {
   render() {

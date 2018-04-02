@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Message from '../components/Message';
-import MessageInput from '../components/MessageInput';
-import FireContainer from '../components/FireContainer';
-import db from '../firebase/db';
+import Message from 'components/Message';
+import MessageInput from 'components/MessageInput';
+import FireContainer from 'components/FireContainer';
+import db from 'backend/db';
 
 class Chat extends Component {
   constructor(props) {

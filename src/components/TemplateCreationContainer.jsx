@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FireContainer from './FireContainer';
 import TemplateCreation from './TemplateCreation';
-import db from '../firebase/db';
+import db from 'backend/db';
 
 class TemplateCreationContainer extends Component {
   render() {

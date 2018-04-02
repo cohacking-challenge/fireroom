@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import '../firebase/db';
 import { firestore } from 'firebase';
+
+import 'backend/db';
 
 const { QuerySnapshot, DocumentSnapshot } = firestore;
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import db from '../firebase/db';
+import db from 'backend/db';
 
 class TemplateCreation extends Component {
   constructor(props) {

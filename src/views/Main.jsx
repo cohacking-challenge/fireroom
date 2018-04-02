@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route, NavLink } from 'react-router-dom';
-import Signup from '../views/Signup';
-import Chat from '../views/Chat';
-import TemplateCreationContainer from '../components/TemplateCreationContainer';
+import Signup from 'views/Signup';
+import Chat from 'views/Chat';
+import TemplateCreationContainer from 'components/TemplateCreationContainer';
 import logo from '../logo.svg';
 
 class Main extends Component {

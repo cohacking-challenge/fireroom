@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import QuizTemplatesList from './QuizTemplatesList';
 import FireContainer from './FireContainer';
-import db from '../firebase/db';
+import db from 'backend/db';
 
 class QuizTemplatesListContainer extends Component {
   render() {

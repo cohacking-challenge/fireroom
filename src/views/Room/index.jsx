@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'antd';
-import QuestionPage from '../../components/QuestionPage';
-import questionStatuses from '../../enums/questionStatuses';
+import QuestionPage from 'components/QuestionPage';
+import questionStatuses from 'enums/questionStatuses';
 
 import './style.css';
 
