@@ -43,6 +43,14 @@ class Main extends Component {
                 Room 42 (not connected to Firebase)
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/templates/Gy3XDxWihs18sDXTU0Ej/sessions/zm9BNcGVenKWZ1gHUBhd"
+                activeStyle={{ fontWeight: 'bold' }}
+              >
+                Test Session
+              </NavLink>
+            </li>
           </ul>
 
           <hr />
