@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import { Form, Input, Button } from 'antd';
 
 class Signup extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    const { getFieldDecorator, getFieldValue } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
 
     return (
       <Form layout="inline" onSubmit={this.handleSubmit}>
@@ -20,11 +17,6 @@ class Signup extends Component {
             backgroundColor: 'red',
             color: 'white',
             borderColor: 'red',
-          }}
-          onClick={() => {
-            {
-              /* console.log(getFieldValue('pin')); */
-            }
           }}
         >
           Primary
