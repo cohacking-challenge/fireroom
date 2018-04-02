@@ -22,7 +22,9 @@ class Signup extends Component {
             borderColor: 'red',
           }}
           onClick={() => {
-            console.log(getFieldValue('pin'));
+            {
+              /* console.log(getFieldValue('pin')); */
+            }
           }}
         >
           Primary
