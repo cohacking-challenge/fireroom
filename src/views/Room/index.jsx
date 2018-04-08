@@ -125,8 +125,8 @@ class Room extends Component {
 
         {this.state.curPageIndex < this.state.pages.length && (
           <QuestionPage
-            page={this.state.pages[this.state.curPageIndex]}
-            pageStatus={this.state.curPageStatus}
+            question={this.state.pages[this.state.curPageIndex]}
+            questionStatus={this.state.curPageStatus}
             responses={this.state.responses}
           />
         )}
