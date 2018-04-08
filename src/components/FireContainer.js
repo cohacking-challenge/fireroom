@@ -7,12 +7,14 @@ const { QuerySnapshot, DocumentSnapshot } = firestore;
 
 function makeDataFromDoc(doc) {
   const data = doc.data();
-  Object.defineProperty(data, '__id', {
-    value: doc.id,
-    writable: false,
-    enumerable: false,
-    configurable: false,
-  });
+  if (typeof data === 'object') {
+    Object.defineProperty(data, '__id', {
+      value: doc.id,
+      writable: false,
+      enumerable: false,
+      configurable: false,
+    });
+  }
   return data;
 }
 
@@ -70,10 +72,13 @@ class FireContainer extends Component {
   }
   render() {
     // children is the render prop
-    return this.props.children(
-      makeDataFromSnapshot(this.state.snapshot),
-      this.state.snapshot,
-      this.props.dbRef,
+    return (
+      this.state.snapshot &&
+      this.props.children(
+        makeDataFromSnapshot(this.state.snapshot),
+        this.state.snapshot,
+        this.props.dbRef,
+      )
     );
   }
 }

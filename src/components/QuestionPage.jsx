@@ -9,44 +9,51 @@ import { Row, Col } from 'antd';
 
 class QuestionPage extends Component {
   render() {
-    this.nbVotersPerAnswer = [];
-    for (let i = 0; i < this.props.page.answers.length; i++) {
-      this.nbVotersPerAnswer.push(
-        this.props.responses.filter(x => x.answerIndex === i).length,
-      );
+    let nbVotersPerAnswer = [];
+    if (
+      Array.isArray(this.props.question.answers) &&
+      Array.isArray(this.props.responses)
+    ) {
+      for (let i = 0; i < this.props.question.answers.length; i++) {
+        nbVotersPerAnswer.push(
+          this.props.responses.filter(x => x.answerIndex === i).length,
+        );
+      }
     }
 
     return (
       <div className="QuestionPage" style={{ minHeight: '70vh' }}>
-        <h1 style={{ fontSize: '200%' }}>{this.props.page.title}</h1>
+        <h1 style={{ fontSize: '200%' }}>{this.props.question.title}</h1>
         <div style={{ marginTop: '5%' }}>
-          {this.props.pageStatus === 'showAnswers' &&
-            this.props.page.answers.map((answer, i) => (
+          {this.props.questionStatus === 'showAnswers' &&
+            this.props.question.answers.map((answer, i) => (
               <Col key={i} md={12}>
-                <AnswerCard key={i}>{answer.label}</AnswerCard>
+                <AnswerCard>{answer.label}</AnswerCard>
               </Col>
             ))}
 
-          {this.props.pageStatus === 'showResponses' &&
-            this.props.page.answers.map((answer, i) => (
-              <Col md={12}>
+          {this.props.questionStatus === 'showResponses' &&
+            this.props.question.answers.map((answer, i) => (
+              <Col key={i} md={12}>
                 <AnswerCard
-                  key={i}
-                  nbVoters={this.nbVotersPerAnswer[i]}
-                  totalVoters={this.props.responses.length}
+                  nbVoters={nbVotersPerAnswer[i]}
+                  totalVoters={
+                    this.props.responses && this.props.responses.length
+                  }
                 >
                   {answer.label}
                 </AnswerCard>
               </Col>
             ))}
 
-          {this.props.pageStatus === 'showCorrectAnswer' &&
-            this.props.page.answers.map((answer, i) => (
-              <Col md={12}>
+          {this.props.questionStatus === 'showCorrectAnswer' &&
+            this.props.question.answers.map((answer, i) => (
+              <Col key={i} md={12}>
                 <AnswerCard
-                  key={i}
-                  nbVoters={this.nbVotersPerAnswer[i]}
-                  totalVoters={this.props.responses.length}
+                  nbVoters={nbVotersPerAnswer[i]}
+                  totalVoters={
+                    this.props.responses && this.props.responses.length
+                  }
                   isTransparent={!answer.isCorrect}
                 >
                   {answer.label}

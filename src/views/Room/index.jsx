@@ -156,8 +156,8 @@ class Room extends Component {
           >
             <Row gutter={24} style={{ flexWrap: 'wrap' }} align="top">
               <QuestionPage
-                page={this.state.pages[this.state.curPageIndex]}
-                pageStatus={this.state.curPageStatus}
+                question={this.state.pages[this.state.curPageIndex]}
+                questionStatus={this.state.curPageStatus}
                 responses={this.state.responses}
               />
             </Row>
