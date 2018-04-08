@@ -64,54 +64,52 @@ class Session extends Component {
     return (
       <div className="Session">
         <FireContainer dbRef={this.templateRef}>
-          {template =>
-            template && (
-              <FireContainer dbRef={this.sessionRef}>
-                {session => {
-                  if (session.curPageIndex >= template.pages.length) {
-                    return "It's over"; // TODO: Put a Component
-                  }
+          {template => (
+            <FireContainer dbRef={this.sessionRef}>
+              {session => {
+                if (session.curPageIndex >= template.pages.length) {
+                  return "It's over"; // TODO: Put a Component
+                }
 
-                  const page = template.pages[session.curPageIndex];
-                  if (page.type !== 'QUESTION') {
-                    throw new Error('This is not a question');
-                  }
-                  const questionRef = page.questionRef;
-                  return (
-                    session && (
-                      <FireContainer dbRef={questionRef}>
-                        {question => {
-                          return (
+                const page = template.pages[session.curPageIndex];
+                if (page.type !== 'QUESTION') {
+                  throw new Error('This is not a question');
+                }
+                const questionRef = page.questionRef;
+                return (
+                  session && (
+                    <FireContainer dbRef={questionRef}>
+                      {question => {
+                        return (
+                          <div>
+                            <QuestionPage
+                              question={question}
+                              questionStatus={
+                                session.curPageStatus.questionStatus
+                              }
+                              responses={session.responses[question.__id]}
+                            />
                             <div>
-                              <QuestionPage
-                                question={question}
-                                questionStatus={
-                                  session.curPageStatus.questionStatus
+                              <Button onClick={e => this.resetStep()}>
+                                Reset
+                              </Button>
+                              <Button
+                                onClick={e =>
+                                  this.goNextStep(page.type, session)
                                 }
-                                responses={session.responses[question.__id]}
-                              />
-                              <div>
-                                <Button onClick={e => this.resetStep()}>
-                                  Reset
-                                </Button>
-                                <Button
-                                  onClick={e =>
-                                    this.goNextStep(page.type, session)
-                                  }
-                                >
-                                  Next
-                                </Button>
-                              </div>
+                              >
+                                Next
+                              </Button>
                             </div>
-                          );
-                        }}
-                      </FireContainer>
-                    )
-                  );
-                }}
-              </FireContainer>
-            )
-          }
+                          </div>
+                        );
+                      }}
+                    </FireContainer>
+                  )
+                );
+              }}
+            </FireContainer>
+          )}
         </FireContainer>
       </div>
     );

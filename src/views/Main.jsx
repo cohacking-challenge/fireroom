@@ -3,6 +3,7 @@ import { Route, NavLink } from 'react-router-dom';
 import Signup from 'views/Signup';
 import Chat from 'views/Chat';
 import TemplateCreationContainer from 'components/TemplateCreationContainer';
+import SessionsList from 'components/SessionsList';
 import logo from '../logo.svg';
 var firebase = require('firebase');
 
@@ -90,6 +91,9 @@ class Main extends Component {
             </li>
           </ul>
 
+          <hr />
+          <h2>Running sessions</h2>
+          <SessionsList />
           <hr />
 
           {this.state.user && <div>Hello {this.state.user.displayName}</div>}
