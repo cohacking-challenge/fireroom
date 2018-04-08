@@ -1,8 +1,11 @@
-.Room  {
+.Room {
   min-height: 100vh;
-  background-color: #EF2B2B;
+  background-color: #e76f51;
 }
-
-.Room h1, .Room h2, .Room h3, .Room pre {
+/* EF2B2B */
+.Room h1,
+.Room h2,
+.Room h3,
+.Room pre {
   color: white;
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'antd';
 import QuestionPage from 'components/QuestionPage';
 import questionStatuses from 'enums/questionStatuses';
+import { Row, Col } from 'antd';
 
 import './style.css';
 
@@ -88,6 +89,28 @@ class Room extends Component {
             },
           ],
         },
+        {
+          type: 'QUESTION',
+          title: 'What is the best language?',
+          answers: [
+            {
+              label: 'JavaScript',
+              isCorrect: true,
+            },
+            {
+              label: 'Python',
+              isCorrect: false,
+            },
+            {
+              label: 'PHP',
+              isCorrect: false,
+            },
+            {
+              label: 'Ruby',
+              isCorrect: false,
+            },
+          ],
+        },
       ],
     };
     this.goNextPageStatus = this.goNextPageStatus.bind(this);
@@ -121,14 +144,24 @@ class Room extends Component {
   render() {
     return (
       <div className="Room">
-        <h2>Welcome to Room 42</h2>
+        {/* <h2>{this.state.pages[this.state.curPageIndex].title}</h2> */}
 
         {this.state.curPageIndex < this.state.pages.length && (
-          <QuestionPage
-            page={this.state.pages[this.state.curPageIndex]}
-            pageStatus={this.state.curPageStatus}
-            responses={this.state.responses}
-          />
+          <div
+            style={{
+              backgroundColor: '#E76F51',
+              margin: '0 10%',
+              padding: '50px',
+            }}
+          >
+            <Row gutter={24} style={{ flexWrap: 'wrap' }} align="top">
+              <QuestionPage
+                page={this.state.pages[this.state.curPageIndex]}
+                pageStatus={this.state.curPageStatus}
+                responses={this.state.responses}
+              />
+            </Row>
+          </div>
         )}
         {this.state.curPageIndex >= this.state.pages.length && (
           <h3>It's over!</h3>

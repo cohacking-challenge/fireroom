@@ -7,13 +7,14 @@ let styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     height: 100,
-    width: 500,
-    margin: 'auto',
+    // width: 500,
+    margin: '10px',
     marginBottom: 10,
   },
   mainDefault: {
     backgroundColor: 'white',
-    color: 'red',
+    color: 'white',
+    fontSize: '24px',
   },
   mainWrong: {
     backgroundColor: 'none',
@@ -22,6 +23,13 @@ let styles = {
   progressContainer: {
     marginLeft: 10,
     marginRight: 10,
+  },
+  buttonAnswer: {
+    backgroundColor: '#F4A261',
+    borderRadius: '10px',
+  },
+  buttonAnswerOk: {
+    borderRadius: '10px',
   },
 };
 
@@ -43,8 +51,16 @@ class AnswerCard extends Component {
         className="AnswerCard"
         style={
           this.props.isTransparent
-            ? { ...styles.main, ...styles.mainWrong }
-            : { ...styles.main, ...styles.mainDefault }
+            ? {
+                ...styles.main,
+                ...styles.mainWrong,
+                ...styles.buttonAnswerOk,
+              }
+            : {
+                ...styles.main,
+                ...styles.mainDefault,
+                ...styles.buttonAnswer,
+              }
         }
       >
         {this.props.children}
