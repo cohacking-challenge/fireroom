@@ -28,12 +28,7 @@ function createTemplateWithSession(nbOfQuestions = 10) {
   // Generate one session in "templates/:templateId/sessions/generated-session-0"
   let responses = {};
   for (let i = 0; i < nbOfQuestions; i++) {
-    responses[`generated-question-${i}`] = Array(3)
-      .fill()
-      .map((x, i) => ({
-        answerIndex: Math.floor(4 * Math.random()),
-        userId: 'generated',
-      }));
+    responses[`generated-question-${i}`] = [];
   }
   db
     .collection('templates')
@@ -41,6 +36,7 @@ function createTemplateWithSession(nbOfQuestions = 10) {
     .collection('sessions')
     .doc(`generated-session-0`)
     .set({
+      curStatus: 'waitingParticipants',
       curPageIndex: 0,
       curPageStatus: { questionStatus: 'showTitle' },
       responses,
@@ -58,19 +54,23 @@ function createTemplateWithSession(nbOfQuestions = 10) {
         answers: [
           {
             isCorrect: true,
-            label: 'Answer 0',
+            label: ['France', 'Spain', 'Germany'][
+              Math.floor(3 * Math.random())
+            ],
           },
           {
             isCorrect: false,
-            label: 'Answer 1',
+            label: ['United-Sates', 'Mexico', 'Brasil'][
+              Math.floor(3 * Math.random())
+            ],
           },
           {
             isCorrect: false,
-            label: 'Answer 2',
+            label: ['China', 'Japan', 'Korea'][Math.floor(3 * Math.random())],
           },
           {
             isCorrect: false,
-            label: 'Answer 3',
+            label: 'D, the answer D',
           },
         ],
       });

@@ -49,6 +49,7 @@ class AnswerCard extends Component {
     return (
       <div
         className="AnswerCard"
+        onClick={this.props.onClick}
         style={
           this.props.isTransparent
             ? {

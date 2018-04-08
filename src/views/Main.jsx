@@ -5,7 +5,8 @@ import Chat from 'views/Chat';
 import TemplateCreationContainer from 'components/TemplateCreationContainer';
 import SessionsList from 'components/SessionsList';
 import logo from '../logo.svg';
-var firebase = require('firebase');
+import firebase from 'firebase';
+import createTemplateWithSession from 'scripts/createTemplateWithSession';
 
 class Main extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class Main extends Component {
       user: null,
     };
     this.logOut = this.logOut.bind(this);
+    createTemplateWithSession(); // TODO: remove to avoid to many template creation
   }
 
   componentDidMount() {
@@ -58,7 +60,7 @@ class Main extends Component {
             {!this.state.user && (
               <li>
                 <NavLink to="/signup" activeStyle={{ fontWeight: 'bold' }}>
-                  Signup (not connected to Firebase)
+                  Signup / Login
                 </NavLink>
               </li>
             )}
@@ -97,6 +99,17 @@ class Main extends Component {
           <hr />
 
           {this.state.user && <div>Hello {this.state.user.displayName}</div>}
+
+          <p>To test this awesome application, you need to:</p>
+
+          <ul>
+            <li>Login (by clicking on "Signup/login")</li>
+            <li>Select a running session</li>
+            <li>Wait eventual other participants</li>
+            <li>Click on the button "Fire the room!"</li>
+            <li>Click on the buttons "Next"</li>
+            <li>Select some answers</li>
+          </ul>
 
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/chat" component={Chat} />

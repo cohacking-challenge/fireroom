@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AnswerCard from './AnswerCard';
-import Player from './Player';
+import PlayersIconList from './PlayersIconList';
 import { Row, Col } from 'antd';
 
 /**
@@ -8,15 +8,32 @@ import { Row, Col } from 'antd';
  */
 
 class QuestionPage extends Component {
+  handleClick(answerIndex) {
+    // Copy of this.props.responses
+    let newResponses = JSON.parse(JSON.stringify(this.props.responses));
+    if (
+      !newResponses[this.props.question.__id]
+        .map(r => r.uid)
+        .includes(this.props.user.uid)
+    ) {
+      newResponses[this.props.question.__id].push({
+        answerIndex: answerIndex,
+        uid: this.props.user.uid,
+      });
+    }
+    this.props.sessionRef.set({ responses: newResponses }, { merge: true });
+  }
+
   render() {
     let nbVotersPerAnswer = [];
     if (
       Array.isArray(this.props.question.answers) &&
-      Array.isArray(this.props.responses)
+      Array.isArray(this.props.responsesOfQuestion)
     ) {
       for (let i = 0; i < this.props.question.answers.length; i++) {
         nbVotersPerAnswer.push(
-          this.props.responses.filter(x => x.answerIndex === i).length,
+          this.props.responsesOfQuestion.filter(x => x.answerIndex === i)
+            .length,
         );
       }
     }
@@ -28,7 +45,9 @@ class QuestionPage extends Component {
           {this.props.questionStatus === 'showAnswers' &&
             this.props.question.answers.map((answer, i) => (
               <Col key={i} md={12}>
-                <AnswerCard>{answer.label}</AnswerCard>
+                <AnswerCard onClick={() => this.handleClick(i)}>
+                  {answer.label}
+                </AnswerCard>
               </Col>
             ))}
 
@@ -38,7 +57,8 @@ class QuestionPage extends Component {
                 <AnswerCard
                   nbVoters={nbVotersPerAnswer[i]}
                   totalVoters={
-                    this.props.responses && this.props.responses.length
+                    this.props.responsesOfQuestion &&
+                    this.props.responsesOfQuestion.length
                   }
                 >
                   {answer.label}
@@ -52,7 +72,8 @@ class QuestionPage extends Component {
                 <AnswerCard
                   nbVoters={nbVotersPerAnswer[i]}
                   totalVoters={
-                    this.props.responses && this.props.responses.length
+                    this.props.responsesOfQuestion &&
+                    this.props.responsesOfQuestion.length
                   }
                   isTransparent={!answer.isCorrect}
                 >
@@ -61,7 +82,11 @@ class QuestionPage extends Component {
               </Col>
             ))}
         </div>
-        <Player />
+        <PlayersIconList
+          players={this.props.participants.filter(p =>
+            this.props.responsesOfQuestion.map(x => x.uid).includes(p.uid),
+          )}
+        />
       </div>
     );
   }
