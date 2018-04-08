@@ -1,36 +1,36 @@
-import React, { Component } from "react";
-import { Progress } from "antd";
+import React, { Component } from 'react';
+import { Progress } from 'antd';
 
 let styles = {
   main: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     height: 100,
     // width: 500,
-    margin: "10px",
-    marginBottom: 10
+    margin: '10px',
+    marginBottom: 10,
   },
   mainDefault: {
-    backgroundColor: "white",
-    color: "white",
-    fontSize: "24px"
+    backgroundColor: 'white',
+    color: 'white',
+    fontSize: '24px',
   },
   mainWrong: {
-    backgroundColor: "none",
-    color: "white"
+    backgroundColor: 'none',
+    color: 'white',
   },
   progressContainer: {
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
   },
   buttonAnswer: {
-    backgroundColor: "#F4A261",
-    borderRadius: "10px"
+    backgroundColor: '#F4A261',
+    borderRadius: '10px',
   },
   buttonAnswerOk: {
-    borderRadius: "10px"
-  }
+    borderRadius: '10px',
+  },
 };
 
 /**
@@ -54,12 +54,12 @@ class AnswerCard extends Component {
             ? {
                 ...styles.main,
                 ...styles.mainWrong,
-                ...styles.buttonAnswerOk
+                ...styles.buttonAnswerOk,
               }
             : {
                 ...styles.main,
                 ...styles.mainDefault,
-                ...styles.buttonAnswer
+                ...styles.buttonAnswer,
               }
         }
       >

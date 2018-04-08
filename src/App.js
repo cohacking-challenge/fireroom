@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-import Main from "views/Main";
-import Room from "views/Room";
+import Main from 'views/Main';
+import Room from 'views/Room';
 
-import "./App.css";
+import './App.css';
 
 class App extends Component {
   render() {

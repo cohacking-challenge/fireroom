@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Button } from "antd";
-import QuestionPage from "components/QuestionPage";
-import questionStatuses from "enums/questionStatuses";
-import { Row, Col } from "antd";
+import React, { Component } from 'react';
+import { Button } from 'antd';
+import QuestionPage from 'components/QuestionPage';
+import questionStatuses from 'enums/questionStatuses';
+import { Row, Col } from 'antd';
 
-import "./style.css";
+import './style.css';
 
 /**
  * Component to handle all the logic of a room
@@ -17,101 +17,101 @@ class Room extends Component {
     // TODO: find a way to link it with Firebase
     this.state = {
       curPageIndex: 0,
-      curPageStatus: "showTitle",
+      curPageStatus: 'showTitle',
       responses: [
         {
           participantIndex: 0,
-          answerIndex: 0
+          answerIndex: 0,
         },
         {
           participantIndex: 1,
-          answerIndex: 1
+          answerIndex: 1,
         },
         {
           participantIndex: 2,
-          answerIndex: 2
+          answerIndex: 2,
         },
         {
           participantIndex: 3,
-          answerIndex: 3
+          answerIndex: 3,
         },
         {
           participantIndex: 4,
-          answerIndex: 0
+          answerIndex: 0,
         },
         {
           participantIndex: 5,
-          answerIndex: 0
-        }
+          answerIndex: 0,
+        },
       ],
       pages: [
         {
-          type: "QUESTION",
-          title: "What is the best language?",
+          type: 'QUESTION',
+          title: 'What is the best language?',
           answers: [
             {
-              label: "JavaScript",
-              isCorrect: true
+              label: 'JavaScript',
+              isCorrect: true,
             },
             {
-              label: "Python",
-              isCorrect: false
+              label: 'Python',
+              isCorrect: false,
             },
             {
-              label: "PHP",
-              isCorrect: false
+              label: 'PHP',
+              isCorrect: false,
             },
             {
-              label: "Ruby",
-              isCorrect: false
-            }
-          ]
+              label: 'Ruby',
+              isCorrect: false,
+            },
+          ],
         },
         {
-          type: "QUESTION",
-          title: "Who is the best teacher?",
+          type: 'QUESTION',
+          title: 'Who is the best teacher?',
           answers: [
             {
-              label: "Eduardo",
-              isCorrect: false
+              label: 'Eduardo',
+              isCorrect: false,
             },
             {
-              label: "Maxence",
-              isCorrect: true
+              label: 'Maxence',
+              isCorrect: true,
             },
             {
-              label: "Nizar",
-              isCorrect: false
+              label: 'Nizar',
+              isCorrect: false,
             },
             {
-              label: "Yacine",
-              isCorrect: true
-            }
-          ]
+              label: 'Yacine',
+              isCorrect: true,
+            },
+          ],
         },
         {
-          type: "QUESTION",
-          title: "What is the best language?",
+          type: 'QUESTION',
+          title: 'What is the best language?',
           answers: [
             {
-              label: "JavaScript",
-              isCorrect: true
+              label: 'JavaScript',
+              isCorrect: true,
             },
             {
-              label: "Python",
-              isCorrect: false
+              label: 'Python',
+              isCorrect: false,
             },
             {
-              label: "PHP",
-              isCorrect: false
+              label: 'PHP',
+              isCorrect: false,
             },
             {
-              label: "Ruby",
-              isCorrect: false
-            }
-          ]
-        }
-      ]
+              label: 'Ruby',
+              isCorrect: false,
+            },
+          ],
+        },
+      ],
     };
     this.goNextPageStatus = this.goNextPageStatus.bind(this);
   }
@@ -123,7 +123,7 @@ class Room extends Component {
    */
   goNextPageStatus(diffIndex) {
     let curIndex = questionStatuses.findIndex(
-      x => x === this.state.curPageStatus
+      x => x === this.state.curPageStatus,
     );
     let newCurPageIndex = this.state.curPageIndex;
     let newIndex = curIndex + diffIndex;
@@ -137,7 +137,7 @@ class Room extends Component {
     }
     this.setState({
       curPageStatus: questionStatuses[newIndex],
-      curPageIndex: newCurPageIndex
+      curPageIndex: newCurPageIndex,
     });
   }
 
@@ -149,12 +149,12 @@ class Room extends Component {
         {this.state.curPageIndex < this.state.pages.length && (
           <div
             style={{
-              backgroundColor: "#E76F51",
-              margin: "0 10%",
-              padding: "50px"
+              backgroundColor: '#E76F51',
+              margin: '0 10%',
+              padding: '50px',
             }}
           >
-            <Row gutter={24} style={{ flexWrap: "wrap" }} align="top">
+            <Row gutter={24} style={{ flexWrap: 'wrap' }} align="top">
               <QuestionPage
                 page={this.state.pages[this.state.curPageIndex]}
                 pageStatus={this.state.curPageStatus}
