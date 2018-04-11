@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import db from 'backend/db';
 
 class TemplateCreation extends Component {
@@ -9,19 +8,26 @@ class TemplateCreation extends Component {
     this.deletePage = this.deletePage.bind(this);
   }
   handleChange(event, ...fields) {
+    let targetValue;
+    if (event.target.type === 'checkbox') {
+      targetValue = event.target.checked;
+    } else {
+      targetValue = event.target.value;
+    }
+
     // Try to modify the value document[fields[0]]...[fields[n-1]]
     let newValue;
     if (fields.length === 0) {
       return;
     } else if (fields.length === 1) {
-      newValue = event.target.value;
+      newValue = targetValue;
     } else {
       newValue = this.props.template[fields[0]];
       let cursor = newValue;
       for (let i = 1; i < fields.length - 1; i++) {
         cursor = cursor[fields[i]];
       }
-      cursor[fields[fields.length - 1]] = event.target.value;
+      cursor[fields[fields.length - 1]] = targetValue;
     }
     db
       .collection('templates')
@@ -33,10 +39,10 @@ class TemplateCreation extends Component {
     let newPages = this.props.template.pages;
     newPages.push({
       title: 'Question title',
-      type: 'OPEN_CHAT',
+      type: 'QUESTION',
       answers: Array(4).fill({
         label: 'Answer...',
-        isCorrect: true,
+        isCorrect: false,
       }),
     });
     db
@@ -54,11 +60,36 @@ class TemplateCreation extends Component {
       .set({ pages: newPages }, { merge: true });
   }
 
+  addNewAnswer(pageId) {
+    let newPages = this.props.template.pages;
+
+    newPages[pageId].answers.push({
+      isCorrect: false,
+      label: 'Answer...',
+    });
+
+    db
+      .collection('templates')
+      .doc(this.props.template.__id)
+      .set({ pages: newPages }, { merge: true });
+  }
+
+  deleteAnswer(pageId, answerId) {
+    let newPages = this.props.template.pages;
+    newPages[pageId].answers.splice(answerId, 1);
+    db
+      .collection('templates')
+      .doc(this.props.template.__id)
+      .set({ pages: newPages }, { merge: true });
+  }
+
   render() {
+    if (!this.props.template) return false;
     return (
       <div className="TemplateCreation">
         <h2>Hello TemplateCreation</h2>
         <p>This component is here to edit one specific Template!</p>
+        <pre>{console.log(this.props.template)}</pre>
         Name <br />
         <input
           type="text"
@@ -89,7 +120,15 @@ class TemplateCreation extends Component {
                 value={this.props.template.pages[pageId].title}
               />
               <br />
-              {this.props.template.pages[pageId].answers &&
+              {this.props.template.pages[pageId].type === 'OPEN_CHAT' ? (
+                <div>
+                  <br />
+                </div>
+              ) : (
+                <h3> Question</h3>
+              )}
+              {this.props.template.pages[pageId].type === 'QUESTION' &&
+                this.props.template.pages[pageId].answers &&
                 this.props.template.pages[pageId].answers.map(
                   (answer, answerId) => (
                     <div key={answerId}>
@@ -111,10 +150,40 @@ class TemplateCreation extends Component {
                             .label
                         }
                       />
+                      <input
+                        type="checkbox"
+                        onChange={e => {
+                          this.handleChange(
+                            e,
+                            'pages',
+                            pageId,
+                            'answers',
+                            answerId,
+                            'isCorrect',
+                          );
+                        }}
+                        checked={
+                          this.props.template.pages[pageId].answers[answerId]
+                            .isCorrect
+                        }
+                      />
+                      <button
+                        onClick={e => this.deleteAnswer(pageId, answerId)}
+                      >
+                        Delete answer
+                      </button>
                     </div>
                   ),
                 )}
-              <button onClick={e => this.deletePage(pageId)}>Delete</button>
+              {this.props.template.pages[pageId].type === 'QUESTION' && (
+                <button onClick={e => this.addNewAnswer(pageId)}>
+                  Add new answer
+                </button>
+              )}
+              <br />
+              <button onClick={e => this.deletePage(pageId)}>
+                Delete page
+              </button>
             </div>
           ))}
         <hr />

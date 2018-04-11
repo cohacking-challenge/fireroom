@@ -20,7 +20,6 @@ class Main extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user: user });
-        console.log('DEBUG user', user);
       }
     });
   }
@@ -88,6 +87,11 @@ class Main extends Component {
                 activeStyle={{ fontWeight: 'bold' }}
               >
                 Test Session
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/new-template" activeStyle={{ fontWeight: 'bold' }}>
+                Create template
               </NavLink>
             </li>
           </ul>

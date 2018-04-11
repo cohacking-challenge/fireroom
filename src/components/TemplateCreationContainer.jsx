@@ -8,9 +8,9 @@ class TemplateCreationContainer extends Component {
     return (
       <div className="TemplateCreationContainer">
         <FireContainer
-          dbRef={db.collection('templates').doc('Gy3XDxWihs18sDXTU0Ej')}
+          dbRef={db.collection('templates').doc('generated-1523477339460')}
         >
-          {data => data && <TemplateCreation template={data} />}
+          {data => <TemplateCreation template={data} />}
         </FireContainer>
       </div>
     );
