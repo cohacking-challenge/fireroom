@@ -20,6 +20,7 @@
     "prettier": "yarn lint --fix"
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.7.0",
     "cross-env": "^5.1.4",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-react-app": "^2.1.0",
