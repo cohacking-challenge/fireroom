@@ -71,15 +71,7 @@ class Signup extends Component {
               rules: [{ required: true, message: 'Please input a pin!' }],
             })(<Input type="Number" placeholder="Pin" />)}
           </Form.Item>
-          <Button
-            style={{
-              backgroundColor: 'red',
-              color: 'white',
-              borderColor: 'red',
-            }}
-          >
-            Primary
-          </Button>
+          <Button>Primary</Button>
         </Form>
         {this.state.user === null && (
           <div>
