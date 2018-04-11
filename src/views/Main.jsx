@@ -5,7 +5,7 @@ import Chat from 'views/Chat';
 import TemplateCreationContainer from 'components/TemplateCreationContainer';
 import SessionsList from 'components/SessionsList';
 import logo from '../logo.svg';
-import firebase from 'backend/app';
+import firebase from 'firebase';
 import createTemplateWithSession from 'scripts/createTemplateWithSession';
 
 class Main extends Component {

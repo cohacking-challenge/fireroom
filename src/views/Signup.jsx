@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Button } from 'antd';
 import { Route, Redirect } from 'react-router';
-import firebase from 'backend/app';
+import firebase from 'firebase';
 import firebaseui from 'firebaseui';
 
 class Signup extends Component {
