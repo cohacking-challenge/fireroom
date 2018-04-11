@@ -6,7 +6,6 @@ import TemplateCreationContainer from 'components/TemplateCreationContainer';
 import SessionsList from 'components/SessionsList';
 import logo from '../logo.svg';
 import firebase from 'firebase';
-import createTemplateWithSession from 'scripts/createTemplateWithSession';
 
 class Main extends Component {
   constructor(props) {
@@ -15,7 +14,6 @@ class Main extends Component {
       user: null,
     };
     this.logOut = this.logOut.bind(this);
-    createTemplateWithSession(); // TODO: remove to avoid to many template creation
   }
 
   componentDidMount() {
