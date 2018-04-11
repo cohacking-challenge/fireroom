@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button } from 'antd';
+import React, { Component, Fragment } from 'react';
+import { Button, Layout } from 'antd';
 import FireContainer from 'components/FireContainer';
 import QuestionPage from 'components/QuestionPage';
 import WaitingParticipants from 'components/WaitingParticipants';
@@ -9,6 +9,8 @@ import questionStatuses from 'enums/questionStatuses';
 import firebase from 'firebase';
 
 import './style.css';
+
+const { Header, Footer, Content } = Layout;
 
 /**
  * Component to handle all the logic of a Session
@@ -103,7 +105,7 @@ class Session extends Component {
 
   render() {
     return (
-      <div className="Session">
+      <Layout className="Session">
         <FireContainer dbRef={this.templateRef}>
           {template => (
             <FireContainer dbRef={this.sessionRef}>
@@ -130,21 +132,23 @@ class Session extends Component {
                   <FireContainer dbRef={questionRef}>
                     {question => {
                       return (
-                        <div>
-                          <QuestionPage
-                            user={this.state.user}
-                            sessionRef={this.sessionRef}
-                            question={question}
-                            questionStatus={
-                              session.curPageStatus.questionStatus
-                            }
-                            responses={session.responses}
-                            responsesOfQuestion={
-                              session.responses[question.__id]
-                            }
-                            participants={session.participants}
-                          />
-                          <div>
+                        <Fragment>
+                          <Content>
+                            <QuestionPage
+                              user={this.state.user}
+                              sessionRef={this.sessionRef}
+                              question={question}
+                              questionStatus={
+                                session.curPageStatus.questionStatus
+                              }
+                              responses={session.responses}
+                              responsesOfQuestion={
+                                session.responses[question.__id]
+                              }
+                              participants={session.participants}
+                            />
+                          </Content>
+                          <Footer>
                             <Button onClick={e => this.resetStep()}>
                               Reset
                             </Button>
@@ -153,8 +157,8 @@ class Session extends Component {
                             >
                               Next
                             </Button>
-                          </div>
-                        </div>
+                          </Footer>
+                        </Fragment>
                       );
                     }}
                   </FireContainer>
@@ -163,7 +167,7 @@ class Session extends Component {
             </FireContainer>
           )}
         </FireContainer>
-      </div>
+      </Layout>
     );
   }
 }

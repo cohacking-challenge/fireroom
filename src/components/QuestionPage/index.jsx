@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import AnswerCard from './AnswerCard';
-import PlayersIconList from './PlayersIconList';
+import PlayersIconList from 'components/PlayersIconList';
 import { Row, Col } from 'antd';
+
+import './style.less';
 
 /**
  * Component to handle all the logic of a Question Page
  */
 
 class QuestionPage extends Component {
+  static defaultProps = {
+    participants: [],
+  };
+
   handleClick(answerIndex) {
     // Copy of this.props.responses
     let newResponses = JSON.parse(JSON.stringify(this.props.responses));
@@ -39,9 +45,9 @@ class QuestionPage extends Component {
     }
 
     return (
-      <div className="QuestionPage" style={{ minHeight: '70vh' }}>
-        <h1 style={{ fontSize: '200%' }}>{this.props.question.title}</h1>
-        <div style={{ marginTop: '5%' }}>
+      <div className="QuestionPage">
+        <h1>{this.props.question.title}</h1>
+        <div>
           {this.props.questionStatus === 'showAnswers' &&
             this.props.question.answers.map((answer, i) => (
               <Col key={i} md={12}>

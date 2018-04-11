@@ -1,8 +1,20 @@
-const { injectBabelPlugin } = require('react-app-rewired');
+const { injectBabelPlugin, compose } = require('react-app-rewired');
+const rewireLess = require('react-app-rewire-less');
+const lessVariables = require('./less-variables');
 
-module.exports = function override(config, env) {
-  return injectBabelPlugin(
-    ['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }],
-    config,
-  );
-};
+function lazyLoadComponentStyles() {
+  return config =>
+    injectBabelPlugin(['import', { libraryName: 'antd', style: true }], config);
+}
+
+function addLessCompiler(variables = {}) {
+  return (config, env) =>
+    rewireLess.withLoaderOptions({
+      modifyVars: variables,
+    })(config, env);
+}
+
+module.exports = compose(
+  lazyLoadComponentStyles(),
+  addLessCompiler(lessVariables),
+);

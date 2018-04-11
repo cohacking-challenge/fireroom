@@ -5,7 +5,7 @@ class Player extends Component {
   render() {
     if (!this.props.players) return false;
     return (
-      <div style={{ marginTop: '40%' }}>
+      <div>
         {this.props.players.map((player, index) => (
           <Avatar
             src={player.photoUrl}
