@@ -5,6 +5,8 @@ import Main from 'views/Main';
 import Room from 'views/Room';
 import Session from 'views/Session';
 import Signup from 'views/Signup';
+import NewTemplate from 'views/NewTemplate';
+import EditTemplate from 'views/EditTemplate';
 
 import './App.css';
 
@@ -20,6 +22,8 @@ class App extends Component {
             path="/templates/:templateId/sessions/:sessionId"
             component={Session}
           />
+          <Route path="/new-template" component={NewTemplate} />
+          <Route path="/templates/:templateId" component={EditTemplate} />
         </Switch>
       </div>
     );
