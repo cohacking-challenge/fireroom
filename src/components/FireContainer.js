@@ -7,7 +7,7 @@ const { QuerySnapshot, DocumentSnapshot } = firestore;
 
 function makeDataFromDoc(doc) {
   const data = doc.data();
-  if (typeof data === 'object') {
+  if (typeof data === 'object' && data !== null) {
     Object.defineProperty(data, '__id', {
       value: doc.id,
       writable: false,
