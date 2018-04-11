@@ -12,10 +12,10 @@
     "react-scripts": "1.1.1"
   },
   "scripts": {
-    "start": "cross-env NODE_PATH=src react-scripts start",
-    "build": "cross-env NODE_PATH=src react-scripts build",
-    "test": "cross-env NODE_PATH=src react-scripts test --env=jsdom",
-    "eject": "cross-env NODE_PATH=src react-scripts eject",
+    "start": "cross-env NODE_PATH=src react-app-rewired start",
+    "build": "cross-env NODE_PATH=src react-app-rewired build",
+    "test": "cross-env NODE_PATH=src react-app-rewired test --env=jsdom",
+    "eject": "cross-env NODE_PATH=src react-app-rewired eject",
     "lint": "cross-env NODE_PATH=src eslint src/ --ext=.js,.jsx",
     "prettier": "yarn lint --fix"
   },
@@ -25,6 +25,7 @@
     "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
-    "prettier": "^1.11.1"
+    "prettier": "^1.11.1",
+    "react-app-rewired": "^1.5.0"
   }
 }
