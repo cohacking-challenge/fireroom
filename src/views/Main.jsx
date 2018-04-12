@@ -54,12 +54,8 @@ class Main extends Component {
           <h1 className="Main-title">Welcome to Fireroom</h1>
         </header>
         <div>
-          <div>
-            <Menu
-              onClick={this.handleClick}
-              selectedKeys={[this.state.current]}
-              mode="horizontal"
-            >
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Menu mode="horizontal">
               {this.state.user && (
                 <div>Hello {this.state.user.displayName}</div>
               )}
