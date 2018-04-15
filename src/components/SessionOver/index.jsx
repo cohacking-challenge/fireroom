@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import PlayersIconList from 'components/PlayersIconList';
-import { Button } from 'antd';
 
 import './style.less';
 
