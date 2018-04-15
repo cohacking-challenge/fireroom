@@ -16,7 +16,10 @@ class WaitingParticipants extends Component {
       <div>
         <h2>WaitingParticipants</h2>
         <PlayersIconList players={this.props.participants} />
-        <Button onClick={() => this.handleClick()}>Fire the room!</Button>
+        {this.props.user &&
+          this.props.user.isOwner && (
+            <Button onClick={() => this.handleClick()}>Fire the room!</Button>
+          )}
       </div>
     );
   }
