@@ -15,7 +15,7 @@ class QuestionPage extends Component {
   };
 
   handleClick(answerIndex) {
-    if (this.props.user.isOwner) return;
+    if (this.props.userIsOwner) return;
     // Copy of this.props.responses
     let newResponses = JSON.parse(JSON.stringify(this.props.responses));
     if (
