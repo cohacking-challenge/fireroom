@@ -15,6 +15,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Main} />
           <Route path="/signup" component={Signup} />
+
           <Route path="/rooms/:roomId" component={Room} />
           <Route
             path="/templates/:templateId/sessions/:sessionId"

@@ -78,14 +78,6 @@ class Main extends Component {
                 </NavLink>
               </Menu.Item>
               <Menu.Item>
-                <NavLink
-                  to="/admin/templates/123"
-                  activeStyle={{ fontWeight: 'bold' }}
-                >
-                  Edit Template 123
-                </NavLink>
-              </Menu.Item>
-              <Menu.Item>
                 <NavLink to="/rooms/42" activeStyle={{ fontWeight: 'bold' }}>
                   Room 42 (not connected to Firebase)
                 </NavLink>

@@ -26,6 +26,9 @@ class Session extends Component {
     return db.collection('templates').doc(this.props.match.params.templateId);
   }
 
+  get pinRef() {
+    return db.collection('pins').where('ref', '==', this.sessionRef);
+  }
   get sessionRef() {
     return this.templateRef
       .collection('sessions')
@@ -106,60 +109,67 @@ class Session extends Component {
       <div className="Session">
         <FireContainer dbRef={this.templateRef}>
           {template => (
-            <FireContainer dbRef={this.sessionRef}>
-              {session => {
-                this.addNewUserInSessionIfNew(session);
-                if (session.curStatus === 'waitingParticipants') {
-                  return (
-                    <WaitingParticipants
-                      sessionRef={this.sessionRef}
-                      participants={session.participants}
-                    />
-                  );
-                }
-                if (session.curPageIndex >= template.pages.length) {
-                  return "It's over"; // TODO: Put a Component
-                }
-
-                const page = template.pages[session.curPageIndex];
-                if (page.type !== 'QUESTION') {
-                  throw new Error('This is not a question');
-                }
-                const questionRef = page.questionRef;
-                return (
-                  <FireContainer dbRef={questionRef}>
-                    {question => {
+            <FireContainer dbRef={this.pinRef}>
+              {pin => (
+                <FireContainer dbRef={this.sessionRef}>
+                  {session => {
+                    this.addNewUserInSessionIfNew(session);
+                    if (session.curStatus === 'waitingParticipants') {
                       return (
-                        <div>
-                          <QuestionPage
-                            user={this.state.user}
-                            sessionRef={this.sessionRef}
-                            question={question}
-                            questionStatus={
-                              session.curPageStatus.questionStatus
-                            }
-                            responses={session.responses}
-                            responsesOfQuestion={
-                              session.responses[question.__id]
-                            }
-                            participants={session.participants}
-                          />
-                          <div>
-                            <Button onClick={e => this.resetStep()}>
-                              Reset
-                            </Button>
-                            <Button
-                              onClick={e => this.goNextStep(page.type, session)}
-                            >
-                              Next
-                            </Button>
-                          </div>
-                        </div>
+                        <WaitingParticipants
+                          pinValue={pin[0].value}
+                          sessionRef={this.sessionRef}
+                          participants={session.participants}
+                        />
                       );
-                    }}
-                  </FireContainer>
-                );
-              }}
+                    }
+                    if (session.curPageIndex >= template.pages.length) {
+                      return "It's over"; // TODO: Put a Component
+                    }
+
+                    const page = template.pages[session.curPageIndex];
+                    if (page.type !== 'QUESTION') {
+                      throw new Error('This is not a question');
+                    }
+                    const questionRef = page.questionRef;
+                    return (
+                      <FireContainer dbRef={questionRef}>
+                        {question => {
+                          return (
+                            <div>
+                              <QuestionPage
+                                user={this.state.user}
+                                sessionRef={this.sessionRef}
+                                question={question}
+                                questionStatus={
+                                  session.curPageStatus.questionStatus
+                                }
+                                responses={session.responses}
+                                responsesOfQuestion={
+                                  session.responses[question.__id]
+                                }
+                                participants={session.participants}
+                              />
+                              <div>
+                                <Button onClick={e => this.resetStep()}>
+                                  Reset
+                                </Button>
+                                <Button
+                                  onClick={e =>
+                                    this.goNextStep(page.type, session)
+                                  }
+                                >
+                                  Next
+                                </Button>
+                              </div>
+                            </div>
+                          );
+                        }}
+                      </FireContainer>
+                    );
+                  }}
+                </FireContainer>
+              )}
             </FireContainer>
           )}
         </FireContainer>
