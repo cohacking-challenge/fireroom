@@ -1,18 +1,18 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Layout } from 'antd';
+import { Layout } from 'antd';
 import FireContainer from 'components/FireContainer';
 import QuestionPage from 'components/QuestionPage';
-import WaitingParticipants from 'components/WaitingParticipants';
+import SessionWaitingParticipants from 'components/SessionWaitingParticipants';
+import SessionOver from 'components/SessionOver';
 import SessionNavigation from 'components/SessionNavigation';
 import UserContext from 'contexts/UserContext';
 // import questionStatuses from 'enums/questionStatuses';
 import db from 'backend/db';
 import questionStatuses from 'enums/questionStatuses';
-import firebase from 'firebase';
 
 import './style.css';
 
-const { Footer, Content } = Layout;
+const { Content } = Layout;
 
 /**
  * Component to handle all the logic of a Session
@@ -35,10 +35,11 @@ class Session extends Component {
       .doc(this.props.match.params.sessionId);
   }
 
-  goNextStep(pageType, session) {
+  goNextStep(template, session, pageType) {
     if (pageType !== 'QUESTION') {
       throw new Error('This is not a question');
     }
+    let curStatus = session.curStatus;
     let curQuestionStatusesIndex = questionStatuses.findIndex(
       x => session.curPageStatus && x === session.curPageStatus.questionStatus,
     );
@@ -48,9 +49,13 @@ class Session extends Component {
       newCurQuestionStatusesIndex = 0;
       newCurPageIndex++;
     }
+    if (newCurPageIndex >= template.pages.length) {
+      curStatus = 'over';
+    }
 
     this.sessionRef.set(
       {
+        curStatus,
         curPageStatus: {
           questionStatus: questionStatuses[newCurQuestionStatusesIndex],
         },
@@ -104,15 +109,18 @@ class Session extends Component {
                     this.addNewUserInSessionIfNew(template, session, user);
                     if (session.curStatus === 'waitingParticipants') {
                       return (
-                        <WaitingParticipants
+                        <SessionWaitingParticipants
                           userIsOwner={userIsOwner}
                           sessionRef={this.sessionRef}
                           participants={session.participants}
                         />
                       );
                     }
-                    if (session.curPageIndex >= template.pages.length) {
-                      return "It's over"; // TODO: Put a Component
+                    if (
+                      session.curStatus === 'over' ||
+                      session.curPageIndex >= template.pages.length
+                    ) {
+                      return <SessionOver />;
                     }
 
                     const page = template.pages[session.curPageIndex];
@@ -125,7 +133,7 @@ class Session extends Component {
                         {question => {
                           return (
                             <Fragment>
-                              <Content>
+                              <Content className="flex">
                                 <QuestionPage
                                   user={user}
                                   userIsOwner={userIsOwner}
@@ -147,6 +155,7 @@ class Session extends Component {
                                   session={session}
                                   goNextStep={this.goNextStep}
                                   resetStep={this.resetStep}
+                                  template={template}
                                 />
                               )}
                             </Fragment>

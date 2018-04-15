@@ -11,7 +11,11 @@ class SessionNavigation extends Component {
   handleKeyDown(e) {
     switch (e.keyCode) {
       case 32: // space
-        this.props.goNextStep(this.props.pageType, this.props.session);
+        this.props.goNextStep(
+          this.props.template,
+          this.props.session,
+          this.props.pageType,
+        );
         break;
       default:
         break;
@@ -32,7 +36,11 @@ class SessionNavigation extends Component {
         <Button onClick={this.props.resetStep}>Reset</Button>
         <Button
           onClick={() =>
-            this.props.goNextStep(this.props.pageType, this.props.session)
+            this.props.goNextStep(
+              this.props.template,
+              this.props.session,
+              this.props.pageType,
+            )
           }
         >
           Next

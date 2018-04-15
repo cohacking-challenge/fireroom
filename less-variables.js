@@ -12,4 +12,5 @@ module.exports = {
   '@layout-footer-background': '#EF2B2B',
   '@layout-trigger-background': '#EF2B2B',
   '@link-color': '#FFFFFF',
+  '@btn-default-color': '#000000',
 };
