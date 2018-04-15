@@ -27,9 +27,7 @@ class Main extends Component {
     this.logOut = this.logOut.bind(this);
     // createTemplateWithSession(); // TODO: remove to avoid to many template creation
   }
-  // handleClick(event) {
-  //   this.props.form.setFieldsValue({ value: event.target.value });
-  // }
+
   handleChange(event) {
     this.setState({ value: event.target.value });
   }
@@ -154,34 +152,22 @@ class Main extends Component {
             path="/admin/templates/:templateId"
             component={TemplateCreationContainer}
           />{" "}
-          {/* <Form layout="inline" onSubmit={this.handleSubmit}>
-            <Form.Item>
-              {getFieldDecorator("pin", {
-                rules: [{ required: true, message: "Please input a pin!" }]
-              })(<Input type="string" placeholder="Pin" />)}
-            </Form.Item>
-            <Button
-              style={{
-                backgroundColor: "red",
-                color: "white",
-                borderColor: "red"
-              }}
-            >
-              Primary
-            </Button>
-          </Form> */}
-          {!this.state.validPin && <div> Enter a valid PIN </div>}
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              Pin:
-              <input
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange}
-              />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
+          {this.state.user && (
+            <div>
+              {!this.state.validPin && <div> Enter a valid PIN </div>}
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  Pin:
+                  <input
+                    type="text"
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                  />
+                </label>
+                <input type="submit" value="Submit" />
+              </form>
+            </div>
+          )}
         </div>
       </div>
     );
