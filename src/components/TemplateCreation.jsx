@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import db from 'backend/db';
+import { NavLink } from 'react-router-dom';
 
 class TemplateCreation extends Component {
   constructor(props) {
     super(props);
     this.addPage = this.addPage.bind(this);
+    this.saveRoom = this.saveRoom.bind(this);
     this.deletePage = this.deletePage.bind(this);
   }
   handleChange(event, ...fields) {
@@ -51,6 +53,10 @@ class TemplateCreation extends Component {
       .set({ pages: newPages }, { merge: true });
   }
 
+  saveRoom() {
+    //console.log('props ', this.props);
+  }
+
   deletePage(pageId) {
     let newPages = this.props.template.pages;
     newPages.splice(pageId, 1);
@@ -90,7 +96,7 @@ class TemplateCreation extends Component {
         <h2>Hello TemplateCreation</h2>
         <p>This component is here to edit one specific Template!</p>
         <pre>{console.log(this.props.template)}</pre>
-        Name <br />
+        Room name <br />
         <input
           type="text"
           onChange={e => {
@@ -188,6 +194,9 @@ class TemplateCreation extends Component {
           ))}
         <hr />
         <button onClick={this.addPage}>Add page</button>
+        <NavLink to="/" activeStyle={{ fontWeight: 'bold' }}>
+          Save room
+        </NavLink>
       </div>
     );
   }
