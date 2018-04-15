@@ -38,18 +38,6 @@ class Session extends Component {
       .doc(this.props.match.params.sessionId);
   }
 
-  listenKeyDown(pageType, session) {
-    document.addEventListener('keydown', event => {
-      switch (event.keyCode) {
-        case 32: // space
-          this.goNextStep(pageType, session);
-          break;
-        default:
-          break;
-      }
-    });
-  }
-
   goNextStep(pageType, session) {
     if (pageType !== 'QUESTION') {
       throw new Error('This is not a question');
