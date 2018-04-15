@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'antd';
 import QuestionPage from 'components/QuestionPage';
 import questionStatuses from 'enums/questionStatuses';
-import { Row, Col } from 'antd';
+import { Row } from 'antd';
 
 import './style.css';
 

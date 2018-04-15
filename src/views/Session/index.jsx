@@ -10,7 +10,7 @@ import firebase from 'firebase';
 
 import './style.css';
 
-const { Header, Footer, Content } = Layout;
+const { Footer, Content } = Layout;
 
 /**
  * Component to handle all the logic of a Session
