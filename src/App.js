@@ -17,26 +17,24 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.changeUser = user => {
-      this.setState(state => ({
-        user,
-      }));
-    };
-
-    // State also contains the updater function so it will
-    // be passed down into the context provider
     this.state = {
       user: null,
     };
 
+    this.changeUser = this.changeUser.bind(this);
     this.logOut = this.logOut.bind(this);
   }
+
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({ user: user });
       }
     });
+  }
+
+  changeUser(user) {
+    this.setState({ user });
   }
 
   logOut(e) {
