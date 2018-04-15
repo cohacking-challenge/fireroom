@@ -7,18 +7,50 @@ import SessionsList from 'components/SessionsList';
 import logo from '../logo.svg';
 import firebase from 'firebase';
 import createTemplateWithSession from 'scripts/createTemplateWithSession';
-
+import { Form, Input, Button } from 'antd';
+import { Redirect } from 'react-router';
 import { Menu } from 'antd';
+import db from '../backend/db';
 
 import './style.css';
 class Main extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       user: null,
+      value: '',
+      validPin: false,
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.logOut = this.logOut.bind(this);
     // createTemplateWithSession(); // TODO: remove to avoid to many template creation
+  }
+  // handleClick(event) {
+  //   this.props.form.setFieldsValue({ value: event.target.value });
+  // }
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    db
+      .collection('pins')
+      .where('value', '==', this.state.value)
+      .get()
+      .then(querySnapshot => {
+        //console.log("PIN", querySnapshot.empty);
+        querySnapshot.forEach(documentSnapshot => {
+          console.log('PIN', documentSnapshot.data());
+          this.setState({ validPin: true });
+          this.props.history.push(documentSnapshot.data().ref.path);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   componentDidMount() {
@@ -42,6 +74,7 @@ class Main extends Component {
       });
   }
   render() {
+    const { getFieldDecorator } = this.props.form;
     return (
       <div className="Main">
         <header className="Main-header">
@@ -92,7 +125,6 @@ class Main extends Component {
               </Menu.Item>
             </Menu>
           </div>
-
           {this.state.user && (
             <div>
               <h2>Running sessions</h2>
@@ -101,9 +133,7 @@ class Main extends Component {
               <hr />
             </div>
           )}
-
           <p>To test this awesome application, you need to:</p>
-
           <ul>
             {!this.state.user && <li>Login (by clicking on "Signup/login")</li>}
             {this.state.user && (
@@ -116,18 +146,45 @@ class Main extends Component {
               </div>
             )}
           </ul>
-
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/chat" component={Chat} />
           <Route
             exact
             path="/admin/templates/:templateId"
             component={TemplateCreationContainer}
-          />
+          />{' '}
+          {/* <Form layout="inline" onSubmit={this.handleSubmit}>
+            <Form.Item>
+              {getFieldDecorator("pin", {
+                rules: [{ required: true, message: "Please input a pin!" }]
+              })(<Input type="string" placeholder="Pin" />)}
+            </Form.Item>
+            <Button
+              style={{
+                backgroundColor: "red",
+                color: "white",
+                borderColor: "red"
+              }}
+            >
+              Primary
+            </Button>
+          </Form> */}
+          {!this.state.validPin && <div> Enter a valid PIN </div>}
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Pin:
+              <input
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
         </div>
       </div>
     );
   }
 }
 
-export default Main;
+export default Form.create()(Main);
