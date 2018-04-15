@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import MyRooms from 'components/MyRooms';
+import UserContext from 'contexts/UserContext';
 
-class MyRooms extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null,
-    };
-  }
-
+class MyRoomsView extends Component {
   render() {
-    return 'Loading...';
+    return (
+      <UserContext.Consumer>
+        {({ user }) =>
+          user ? <MyRooms user={user} /> : <div>No room to show yet</div>
+        }
+      </UserContext.Consumer>
+    );
   }
 }
 
-export default MyRooms;
+export default MyRoomsView;

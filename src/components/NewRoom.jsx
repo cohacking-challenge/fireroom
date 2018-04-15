@@ -4,7 +4,6 @@ import UserContext from 'contexts/UserContext';
 
 class NewRoom extends Component {
   componentDidMount() {
-    console.log('props ', this.props.user.uid);
     this.createTemplate();
   }
 
@@ -21,7 +20,6 @@ class NewRoom extends Component {
         this.props.moveToTemplatePage(docRef.id);
       })
       .catch(error => {
-        console.log('error ', error, 'props ', this.props);
         throw new Error('Error adding document: ', error);
       });
   }
