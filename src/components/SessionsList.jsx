@@ -24,14 +24,16 @@ class SessionsList extends Component {
                     return (
                       <div>
                         {sessions.map(session => {
-                          const link = `/templates/${template.__id}/sessions/${
-                            session.__id
-                          }`;
-                          return (
-                            <NavLink key={link} to={link}>
-                              {link}
-                            </NavLink>
-                          );
+                          if (session.curStatus !== 'live') {
+                            const link = `/templates/${
+                              template.__id
+                            }/sessions/${session.__id}`;
+                            return (
+                              <NavLink key={link} to={link}>
+                                {link}
+                              </NavLink>
+                            );
+                          }
                         })}
                       </div>
                     );

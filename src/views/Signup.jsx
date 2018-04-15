@@ -38,7 +38,7 @@ class Signup extends Component {
           provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
           requireDisplayName: true,
         },
-        // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
         // firebase.auth.GithubAuthProvider.PROVIDER_ID,
         // firebase.auth.EmailAuthProvider.PROVIDER_ID,
@@ -65,7 +65,7 @@ class Signup extends Component {
 
     return (
       <div>
-        <Form layout="inline" onSubmit={this.handleSubmit}>
+        {/* <Form layout="inline" onSubmit={this.handleSubmit}>
           <Form.Item>
             {getFieldDecorator('pin', {
               rules: [{ required: true, message: 'Please input a pin!' }],
@@ -80,7 +80,7 @@ class Signup extends Component {
           >
             Primary
           </Button>
-        </Form>
+        </Form> */}
         {this.state.user === null && (
           <div>
             <div id="firebaseui-auth-container" />

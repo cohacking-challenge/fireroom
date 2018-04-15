@@ -113,6 +113,7 @@ class Session extends Component {
               {pin => (
                 <FireContainer dbRef={this.sessionRef}>
                   {session => {
+                    // console.log("pin", pin);
                     this.addNewUserInSessionIfNew(session);
                     if (session.curStatus === 'waitingParticipants') {
                       return (
