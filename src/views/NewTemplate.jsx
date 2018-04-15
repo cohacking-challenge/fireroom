@@ -1,35 +1,25 @@
 import React, { Component } from 'react';
-import db from 'backend/db';
+import NewRoom from 'components/NewRoom';
+import UserContext from 'contexts/UserContext';
 
-class NewRoom extends Component {
+class NewTemplate extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: null,
-    };
+    this.moveToTemplatePage = this.moveToTemplatePage.bind(this);
   }
 
-  componentDidMount() {
-    this.createTemplate();
-  }
-
-  createTemplate() {
-    db
-      .collection('templates')
-      .add({
-        name: 'New template',
-        pages: [],
-      })
-      .then(docRef => {
-        this.props.history.push(`/${docRef.path}`);
-      })
-      .catch(error => {
-        throw new Error('Error adding document: ', error);
-      });
+  moveToTemplatePage(templateId) {
+    this.props.history.push(`/templates/${templateId}`);
   }
   render() {
-    return 'Loading...';
+    return (
+      <UserContext.Consumer>
+        {({ user }) => (
+          <NewRoom user={user} moveToTemplatePage={this.moveToTemplatePage} />
+        )}
+      </UserContext.Consumer>
+    );
   }
 }
 
-export default NewRoom;
+export default NewTemplate;
