@@ -15,7 +15,7 @@ class WaitingParticipants extends Component {
     return (
       <div>
         <h2>WaitingParticipants</h2>
-        <p>Pin: {this.props.pinValue}</p>
+        <p>Please enter this Pin: {this.props.pinValue}</p>
         <PlayersIconList players={this.props.participants} />
         <Button onClick={() => this.handleClick()}>Fire the room!</Button>
       </div>

@@ -27,6 +27,7 @@ class Session extends Component {
   }
 
   get pinRef() {
+    //console.log(this.sessionRef);
     return db.collection("pins").where("ref", "==", this.sessionRef);
   }
   get sessionRef() {
@@ -113,6 +114,7 @@ class Session extends Component {
               {pin => (
                 <FireContainer dbRef={this.sessionRef}>
                   {session => {
+                    // console.log("pin", pin);
                     this.addNewUserInSessionIfNew(session);
                     if (session.curStatus === "waitingParticipants") {
                       return (
