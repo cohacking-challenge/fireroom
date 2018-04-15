@@ -6,7 +6,9 @@ class MyRoomsView extends Component {
   render() {
     return (
       <UserContext.Consumer>
-        {({ user }) => <MyRooms user={user} />}
+        {({ user }) =>
+          user ? <MyRooms user={user} /> : <div>No room to show yet</div>
+        }
       </UserContext.Consumer>
     );
   }
