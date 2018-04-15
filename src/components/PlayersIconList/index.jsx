@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
 import { Avatar } from 'antd';
+import './style.less';
 
-class Player extends Component {
+class PlayersIconList extends Component {
   render() {
     if (!this.props.players) return false;
+    let avatarClassName = this.props.size === 'xl' ? 'avatar-xl' : '';
     return (
-      <div>
+      <div className="PlayersIconList">
         {this.props.players.map((player, index) => (
           <Avatar
             src={player.photoUrl}
-            style={{
-              backgroundColor: '#931D00',
-              color: 'white',
-              verticalAlign: 'middle',
-            }}
+            className={avatarClassName}
             size="large"
             key={index}
           >
-            {player.displayName.substr(0, 3)}
+            {player.displayName && player.displayName.substr(0, 3)}
           </Avatar>
         ))}
       </div>
@@ -25,4 +23,4 @@ class Player extends Component {
   }
 }
 
-export default Player;
+export default PlayersIconList;

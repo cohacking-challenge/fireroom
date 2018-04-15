@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import PlayersIconList from './PlayersIconList';
+import PlayersIconList from 'components/PlayersIconList';
 import { Button } from 'antd';
 
-class WaitingParticipants extends Component {
+import './style.less';
+
+class SessionWaitingParticipants extends Component {
   handleClick() {
     this.props.sessionRef.set(
       {
@@ -13,7 +15,7 @@ class WaitingParticipants extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="SessionWaitingParticipants">
         <h2>WaitingParticipants</h2>
         <PlayersIconList players={this.props.participants} />
         {this.props.userIsOwner && (
@@ -23,4 +25,4 @@ class WaitingParticipants extends Component {
     );
   }
 }
-export default WaitingParticipants;
+export default SessionWaitingParticipants;
