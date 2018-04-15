@@ -4,7 +4,6 @@ import UserContext from 'contexts/UserContext';
 
 class NewRoom extends Component {
   componentDidMount() {
-    console.log('props ', this.props.user.uid);
     this.createTemplate();
   }
 
