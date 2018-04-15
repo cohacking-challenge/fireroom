@@ -20,7 +20,6 @@ class NewRoom extends Component {
         this.props.moveToTemplatePage(docRef.id);
       })
       .catch(error => {
-        console.log('error ', error, 'props ', this.props);
         throw new Error('Error adding document: ', error);
       });
   }
