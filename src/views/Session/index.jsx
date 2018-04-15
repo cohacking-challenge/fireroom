@@ -4,6 +4,7 @@ import FireContainer from 'components/FireContainer';
 import QuestionPage from 'components/QuestionPage';
 import WaitingParticipants from 'components/WaitingParticipants';
 import SessionNavigation from 'components/SessionNavigation';
+import UserContext from 'contexts/UserContext';
 // import questionStatuses from 'enums/questionStatuses';
 import db from 'backend/db';
 import questionStatuses from 'enums/questionStatuses';
@@ -20,10 +21,6 @@ const { Footer, Content } = Layout;
 class Session extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: null,
-    };
-
     this.goNextStep = this.goNextStep.bind(this);
     this.resetStep = this.resetStep.bind(this);
   }
@@ -76,37 +73,21 @@ class Session extends Component {
     );
   }
 
-  addNewUserInSessionIfNew(template, session) {
-    if (!this.state.user) {
-      firebase.auth().onAuthStateChanged(firebaseUser => {
-        if (firebaseUser) {
-          const user = {
-            displayName: firebaseUser.displayName,
-            email: firebaseUser.email,
-            photoUrl: firebaseUser.photoURL,
-            emailVerified: firebaseUser.emailVerified,
-            uid: firebaseUser.uid,
-            isOwner: template.ownerUid === firebaseUser.uid,
-          };
-          this.setState({
-            user,
-          });
-          let newParticipants = [];
-          if (session.participants) {
-            newParticipants = session.participants;
-          }
-          if (
-            !user.isOwner &&
-            !newParticipants.map(p => p.uid).includes(firebaseUser.uid)
-          ) {
-            newParticipants.push(user);
-            this.sessionRef.set(
-              { participants: newParticipants },
-              { merge: true },
-            );
-          }
-        }
+  addNewUserInSessionIfNew(template, session, user) {
+    const userIsOwner = Boolean(user) && template.ownerUid === user.uid;
+    let newParticipants = [];
+    if (session.participants) {
+      newParticipants = session.participants;
+    }
+    if (!userIsOwner && !newParticipants.map(p => p.uid).includes(user.uid)) {
+      newParticipants.push({
+        displayName: user.displayName,
+        email: user.email,
+        photoUrl: user.photoURL,
+        emailVerified: user.emailVerified,
+        uid: user.uid,
       });
+      this.sessionRef.set({ participants: newParticipants }, { merge: true });
     }
   }
 
@@ -116,61 +97,66 @@ class Session extends Component {
         <FireContainer dbRef={this.templateRef}>
           {template => (
             <FireContainer dbRef={this.sessionRef}>
-              {session => {
-                this.addNewUserInSessionIfNew(template, session);
-                if (session.curStatus === 'waitingParticipants') {
-                  return (
-                    <WaitingParticipants
-                      user={this.state.user}
-                      sessionRef={this.sessionRef}
-                      participants={session.participants}
-                    />
-                  );
-                }
-                if (session.curPageIndex >= template.pages.length) {
-                  return "It's over"; // TODO: Put a Component
-                }
-
-                const page = template.pages[session.curPageIndex];
-                if (page.type !== 'QUESTION') {
-                  throw new Error('This is not a question');
-                }
-                const questionRef = page.questionRef;
-                return (
-                  <FireContainer dbRef={questionRef}>
-                    {question => {
+              {session => (
+                <UserContext.Consumer>
+                  {({ user }) => {
+                    const userIsOwner = user.uid === template.ownerUid;
+                    this.addNewUserInSessionIfNew(template, session, user);
+                    if (session.curStatus === 'waitingParticipants') {
                       return (
-                        <Fragment>
-                          <Content>
-                            <QuestionPage
-                              user={this.state.user}
-                              sessionRef={this.sessionRef}
-                              question={question}
-                              questionStatus={
-                                session.curPageStatus.questionStatus
-                              }
-                              responses={session.responses}
-                              responsesOfQuestion={
-                                session.responses[question.__id]
-                              }
-                              participants={session.participants}
-                            />
-                          </Content>
-                          {this.state.user &&
-                            this.state.user.isOwner && (
-                              <SessionNavigation
-                                pageType={page.type}
-                                session={session}
-                                goNextStep={this.goNextStep}
-                                resetStep={this.resetStep}
-                              />
-                            )}
-                        </Fragment>
+                        <WaitingParticipants
+                          userIsOwner={userIsOwner}
+                          sessionRef={this.sessionRef}
+                          participants={session.participants}
+                        />
                       );
-                    }}
-                  </FireContainer>
-                );
-              }}
+                    }
+                    if (session.curPageIndex >= template.pages.length) {
+                      return "It's over"; // TODO: Put a Component
+                    }
+
+                    const page = template.pages[session.curPageIndex];
+                    if (page.type !== 'QUESTION') {
+                      throw new Error('This is not a question');
+                    }
+                    const questionRef = page.questionRef;
+                    return (
+                      <FireContainer dbRef={questionRef}>
+                        {question => {
+                          return (
+                            <Fragment>
+                              <Content>
+                                <QuestionPage
+                                  user={user}
+                                  userIsOwner={userIsOwner}
+                                  sessionRef={this.sessionRef}
+                                  question={question}
+                                  questionStatus={
+                                    session.curPageStatus.questionStatus
+                                  }
+                                  responses={session.responses}
+                                  responsesOfQuestion={
+                                    session.responses[question.__id]
+                                  }
+                                  participants={session.participants}
+                                />
+                              </Content>
+                              {userIsOwner && (
+                                <SessionNavigation
+                                  pageType={page.type}
+                                  session={session}
+                                  goNextStep={this.goNextStep}
+                                  resetStep={this.resetStep}
+                                />
+                              )}
+                            </Fragment>
+                          );
+                        }}
+                      </FireContainer>
+                    );
+                  }}
+                </UserContext.Consumer>
+              )}
             </FireContainer>
           )}
         </FireContainer>
