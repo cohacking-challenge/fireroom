@@ -8,6 +8,7 @@ import SessionsList from 'components/SessionsList';
 import logo from '../logo.svg';
 import firebase from 'firebase';
 import UserContext from 'contexts/UserContext';
+import JoinRoom from 'components/JoinRoom';
 
 class Main extends Component {
   render() {
@@ -25,6 +26,7 @@ class Main extends Component {
               <h1 className="Main-title">Welcome to Fireroom</h1>
             </header>
             <div>
+              {user && <JoinRoom />}
               <ul>
                 {user && (
                   <li>
