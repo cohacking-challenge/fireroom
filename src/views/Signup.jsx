@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { Form, Input, Button } from 'antd';
-import { Route, Redirect } from 'react-router';
-var firebase = require('firebase');
-var firebaseui = require('firebaseui');
+import React, { Component } from "react";
+import { Form, Input, Button } from "antd";
+import { Route, Redirect } from "react-router";
+var firebase = require("firebase");
+var firebaseui = require("firebaseui");
 
 class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
+      user: null
     };
   }
 
@@ -26,32 +26,32 @@ class Signup extends Component {
         uiShown: () => {
           // The widget is rendered.
           // Hide the loader.
-          document.getElementById('loader').style.display = 'none';
-        },
+          document.getElementById("loader").style.display = "none";
+        }
       },
       // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-      signInFlow: 'popup',
-      signInSuccessUrl: 'http://localhost:3000/',
+      signInFlow: "popup",
+      signInSuccessUrl: "http://localhost:3000/",
       signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         {
           provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-          requireDisplayName: true,
-        },
+          requireDisplayName: true
+        }
         // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
         // firebase.auth.GithubAuthProvider.PROVIDER_ID,
         // firebase.auth.EmailAuthProvider.PROVIDER_ID,
         // firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-      ],
+      ]
     };
     if (firebaseui.auth.AuthUI.getInstance() === null) {
       // Initialize the FirebaseUI Widget using Firebase.
       var ui = new firebaseui.auth.AuthUI(firebase.auth());
       // The start method will wait until the DOM is loaded.
-      ui.start('#firebaseui-auth-container', uiConfig);
+      ui.start("#firebaseui-auth-container", uiConfig);
     } else {
-      this.props.history.push('/');
+      this.props.history.push("/");
       // <Redirect to="/" />;
     }
   }
@@ -67,15 +67,15 @@ class Signup extends Component {
       <div>
         <Form layout="inline" onSubmit={this.handleSubmit}>
           <Form.Item>
-            {getFieldDecorator('pin', {
-              rules: [{ required: true, message: 'Please input a pin!' }],
+            {getFieldDecorator("pin", {
+              rules: [{ required: true, message: "Please input a pin!" }]
             })(<Input type="Number" placeholder="Pin" />)}
           </Form.Item>
           <Button
             style={{
-              backgroundColor: 'red',
-              color: 'white',
-              borderColor: 'red',
+              backgroundColor: "red",
+              color: "white",
+              borderColor: "red"
             }}
           >
             Primary
