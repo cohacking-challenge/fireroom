@@ -51,7 +51,6 @@ class QuestionPage extends Component {
     let selectedAnswerIndex;
     if (userResponseOfQuestion)
       selectedAnswerIndex = userResponseOfQuestion.answerIndex;
-    console.log('DEBUG', selectedAnswerIndex);
 
     return (
       <div className="QuestionPage">

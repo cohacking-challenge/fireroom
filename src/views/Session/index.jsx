@@ -26,8 +26,6 @@ class Session extends Component {
 
     this.goNextStep = this.goNextStep.bind(this);
     this.resetStep = this.resetStep.bind(this);
-
-    // this.listenKeyDown();
   }
 
   get templateRef() {
@@ -53,7 +51,6 @@ class Session extends Component {
   }
 
   goNextStep(pageType, session) {
-    console.log('DEBUG pageType', pageType);
     if (pageType !== 'QUESTION') {
       throw new Error('This is not a question');
     }
@@ -180,20 +177,6 @@ class Session extends Component {
                                 resetStep={this.resetStep}
                               />
                             )}
-                          {/*
-                               <Footer>
-                                <Button onClick={e => this.resetStep()}>
-                                  Reset
-                                </Button>
-                                <Button
-                                  onClick={e =>
-                                    this.goNextStep(page.type, session)
-                                  }
-                                >
-                                  Next
-                                </Button>
-                              </Footer> 
-                          */}
                         </Fragment>
                       );
                     }}
