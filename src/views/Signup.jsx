@@ -61,7 +61,7 @@ class Signup extends Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    // const { getFieldDecorator } = this.props.form;
 
     return (
       <div>
