@@ -15,6 +15,7 @@ class QuestionPage extends Component {
   };
 
   handleClick(answerIndex) {
+    if (this.props.user.isOwner) return;
     // Copy of this.props.responses
     let newResponses = JSON.parse(JSON.stringify(this.props.responses));
     if (
@@ -44,6 +45,13 @@ class QuestionPage extends Component {
       }
     }
 
+    let userResponseOfQuestion = this.props.responsesOfQuestion.find(
+      response => response.uid === this.props.user.uid,
+    );
+    let selectedAnswerIndex;
+    if (userResponseOfQuestion)
+      selectedAnswerIndex = userResponseOfQuestion.answerIndex;
+
     return (
       <div className="QuestionPage">
         <h1>{this.props.question.title}</h1>
@@ -51,7 +59,10 @@ class QuestionPage extends Component {
           {this.props.questionStatus === 'showAnswers' &&
             this.props.question.answers.map((answer, i) => (
               <Col key={i} md={12}>
-                <AnswerCard onClick={() => this.handleClick(i)}>
+                <AnswerCard
+                  isSelected={i === selectedAnswerIndex}
+                  onClick={() => this.handleClick(i)}
+                >
                   {answer.label}
                 </AnswerCard>
               </Col>
@@ -61,6 +72,7 @@ class QuestionPage extends Component {
             this.props.question.answers.map((answer, i) => (
               <Col key={i} md={12}>
                 <AnswerCard
+                  isSelected={i === selectedAnswerIndex}
                   nbVoters={nbVotersPerAnswer[i]}
                   totalVoters={
                     this.props.responsesOfQuestion &&
@@ -76,12 +88,13 @@ class QuestionPage extends Component {
             this.props.question.answers.map((answer, i) => (
               <Col key={i} md={12}>
                 <AnswerCard
+                  isSelected={i === selectedAnswerIndex}
+                  isTransparent={!answer.isCorrect}
                   nbVoters={nbVotersPerAnswer[i]}
                   totalVoters={
                     this.props.responsesOfQuestion &&
                     this.props.responsesOfQuestion.length
                   }
-                  isTransparent={!answer.isCorrect}
                 >
                   {answer.label}
                 </AnswerCard>

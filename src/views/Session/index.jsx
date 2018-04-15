@@ -3,6 +3,7 @@ import { Button, Layout } from 'antd';
 import FireContainer from 'components/FireContainer';
 import QuestionPage from 'components/QuestionPage';
 import WaitingParticipants from 'components/WaitingParticipants';
+import SessionNavigation from 'components/SessionNavigation';
 // import questionStatuses from 'enums/questionStatuses';
 import db from 'backend/db';
 import questionStatuses from 'enums/questionStatuses';
@@ -22,6 +23,9 @@ class Session extends Component {
     this.state = {
       user: null,
     };
+
+    this.goNextStep = this.goNextStep.bind(this);
+    this.resetStep = this.resetStep.bind(this);
   }
 
   get templateRef() {
@@ -72,7 +76,7 @@ class Session extends Component {
     );
   }
 
-  addNewUserInSessionIfNew(session) {
+  addNewUserInSessionIfNew(template, session) {
     if (!this.state.user) {
       firebase.auth().onAuthStateChanged(firebaseUser => {
         if (firebaseUser) {
@@ -82,6 +86,7 @@ class Session extends Component {
             photoUrl: firebaseUser.photoURL,
             emailVerified: firebaseUser.emailVerified,
             uid: firebaseUser.uid,
+            isOwner: template.ownerUid === firebaseUser.uid,
           };
           this.setState({
             user,
@@ -90,14 +95,16 @@ class Session extends Component {
           if (session.participants) {
             newParticipants = session.participants;
           }
-          if (!newParticipants.map(p => p.uid).includes(firebaseUser.uid)) {
+          if (
+            !user.isOwner &&
+            !newParticipants.map(p => p.uid).includes(firebaseUser.uid)
+          ) {
             newParticipants.push(user);
+            this.sessionRef.set(
+              { participants: newParticipants },
+              { merge: true },
+            );
           }
-
-          this.sessionRef.set(
-            { participants: newParticipants },
-            { merge: true },
-          );
         }
       });
     }
@@ -110,10 +117,11 @@ class Session extends Component {
           {template => (
             <FireContainer dbRef={this.sessionRef}>
               {session => {
-                this.addNewUserInSessionIfNew(session);
+                this.addNewUserInSessionIfNew(template, session);
                 if (session.curStatus === 'waitingParticipants') {
                   return (
                     <WaitingParticipants
+                      user={this.state.user}
                       sessionRef={this.sessionRef}
                       participants={session.participants}
                     />
@@ -148,16 +156,15 @@ class Session extends Component {
                               participants={session.participants}
                             />
                           </Content>
-                          <Footer>
-                            <Button onClick={e => this.resetStep()}>
-                              Reset
-                            </Button>
-                            <Button
-                              onClick={e => this.goNextStep(page.type, session)}
-                            >
-                              Next
-                            </Button>
-                          </Footer>
+                          {this.state.user &&
+                            this.state.user.isOwner && (
+                              <SessionNavigation
+                                pageType={page.type}
+                                session={session}
+                                goNextStep={this.goNextStep}
+                                resetStep={this.resetStep}
+                              />
+                            )}
                         </Fragment>
                       );
                     }}
