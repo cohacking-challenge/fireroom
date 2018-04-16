@@ -56,27 +56,9 @@ class Signup extends Component {
     const { getFieldDecorator } = this.props.form;
 
     return (
-      <div>
-        <Form layout="inline" onSubmit={this.handleSubmit}>
-          <Form.Item>
-            {getFieldDecorator('pin', {
-              rules: [{ required: true, message: 'Please input a pin!' }],
-            })(<Input type="Number" placeholder="Pin" />)}
-          </Form.Item>
-          <Button
-            style={{
-              backgroundColor: 'red',
-              color: 'white',
-              borderColor: 'red',
-            }}
-          >
-            Primary
-          </Button>
-        </Form>
-        <div>
-          <div id="firebaseui-auth-container" />
-          <div id="loader">Loading...</div>
-        </div>
+      <div style={{ marginTop: '40vh' }}>
+        <div id="firebaseui-auth-container" />
+        <div id="loader">Loading...</div>
       </div>
     );
   }

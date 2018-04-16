@@ -144,6 +144,7 @@ class Session extends Component {
                                   }
                                   responses={session.responses}
                                   responsesOfQuestion={
+                                    session.responses &&
                                     session.responses[question.__id]
                                   }
                                   participants={session.participants}

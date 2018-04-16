@@ -17,12 +17,11 @@ class Main extends Component {
           <div className="Main">
             <header className="Main-header">
               <img
-                src={logo}
+                src="/img/logo-white.png"
                 className="Main-logo"
                 alt="logo"
-                style={{ height: 60 }}
+                style={{ height: 60, margin: 20 }}
               />
-              <h1 className="Main-title">Welcome to Fireroom</h1>
             </header>
             <div>
               <ul>

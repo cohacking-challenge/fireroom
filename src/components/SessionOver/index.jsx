@@ -9,18 +9,20 @@ class SessionOver extends Component {
       showGif: true,
     };
   }
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        showGif: false,
-      });
-    }, 10000);
+  handleOnLoad() {
+    this.setState({
+      showGif: false,
+    });
   }
   render() {
     return (
       <div className="SessionOver">
         {this.state.showGif && (
-          <img src="https://i.imgur.com/LERj2gF.gif" alt="" />
+          <img
+            src="https://i.imgur.com/LERj2gF.gif"
+            onLoad={this.handleOnLoad.bind(this)}
+            alt=""
+          />
         )}
         {!this.state.showGif && <h2>It's over!</h2>}
       </div>

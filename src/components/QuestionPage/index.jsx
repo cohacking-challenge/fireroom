@@ -17,8 +17,20 @@ class QuestionPage extends Component {
   handleClick(answerIndex) {
     if (this.props.userIsOwner) return;
     // Copy of this.props.responses
-    let newResponses = JSON.parse(JSON.stringify(this.props.responses));
-    if (
+    let newResponses;
+    try {
+      newResponses = JSON.parse(JSON.stringify(this.props.responses));
+    } catch (e) {
+      newResponses = {};
+    }
+    if (!newResponses[this.props.question.__id]) {
+      newResponses[this.props.question.__id] = [
+        {
+          answerIndex: answerIndex,
+          uid: this.props.user.uid,
+        },
+      ];
+    } else if (
       !newResponses[this.props.question.__id]
         .map(r => r.uid)
         .includes(this.props.user.uid)
@@ -45,9 +57,11 @@ class QuestionPage extends Component {
       }
     }
 
-    let userResponseOfQuestion = this.props.responsesOfQuestion.find(
-      response => response.uid === this.props.user.uid,
-    );
+    let userResponseOfQuestion =
+      this.props.responsesOfQuestion &&
+      this.props.responsesOfQuestion.find(
+        response => response.uid === this.props.user.uid,
+      );
     let selectedAnswerIndex;
     if (userResponseOfQuestion)
       selectedAnswerIndex = userResponseOfQuestion.answerIndex;
@@ -101,11 +115,13 @@ class QuestionPage extends Component {
               </Col>
             ))}
         </div>
-        <PlayersIconList
-          players={this.props.participants.filter(p =>
-            this.props.responsesOfQuestion.map(x => x.uid).includes(p.uid),
-          )}
-        />
+        {this.props.responsesOfQuestion && (
+          <PlayersIconList
+            players={this.props.participants.filter(p =>
+              this.props.responsesOfQuestion.map(x => x.uid).includes(p.uid),
+            )}
+          />
+        )}
       </div>
     );
   }
