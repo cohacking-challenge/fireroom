@@ -56,7 +56,7 @@ class Signup extends Component {
     const { getFieldDecorator } = this.props.form;
 
     return (
-      <div style={{ marginTop: '40vh' }}>
+      <div style={{ marginTop: '25vh' }}>
         <div id="firebaseui-auth-container" />
         <div id="loader">Loading...</div>
       </div>

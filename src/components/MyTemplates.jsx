@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import db from 'backend/db';
 import { Row, Col, Button } from 'antd';
+import { Link } from 'react-router-dom';
 import RoomList from 'components/RoomList';
 import createTemplateWithSession from 'scripts/createTemplateWithSession';
 
@@ -45,7 +46,9 @@ class MyRooms extends Component {
         </Row>
         <Row>
           <Col span={12} offset={6}>
-            <Button>Create a new template</Button>
+            <Link to="/new-template" className="ant-btn">
+              Create a new template
+            </Link>
           </Col>
         </Row>
         <br />

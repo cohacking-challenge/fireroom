@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './style.less';
 
@@ -24,7 +25,11 @@ class SessionOver extends Component {
             alt=""
           />
         )}
-        {!this.state.showGif && <h2>It's over!</h2>}
+        {!this.state.showGif && (
+          <h2>
+            <Link to="/">It's over, go home!</Link>
+          </h2>
+        )}
       </div>
     );
   }

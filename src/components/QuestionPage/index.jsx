@@ -43,6 +43,15 @@ class QuestionPage extends Component {
     this.props.sessionRef.set({ responses: newResponses }, { merge: true });
   }
 
+  getParticipantsWhoAnswered() {
+    return this.props.participants.filter(p => {
+      return (
+        this.props.responsesOfQuestion &&
+        this.props.responsesOfQuestion.map(x => x.uid).includes(p.uid)
+      );
+    });
+  }
+
   render() {
     let nbVotersPerAnswer = [];
     if (
@@ -115,13 +124,7 @@ class QuestionPage extends Component {
               </Col>
             ))}
         </div>
-        {this.props.responsesOfQuestion && (
-          <PlayersIconList
-            players={this.props.participants.filter(p =>
-              this.props.responsesOfQuestion.map(x => x.uid).includes(p.uid),
-            )}
-          />
-        )}
+        <PlayersIconList players={this.getParticipantsWhoAnswered()} />
       </div>
     );
   }

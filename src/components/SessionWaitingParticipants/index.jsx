@@ -16,7 +16,7 @@ class SessionWaitingParticipants extends Component {
   render() {
     return (
       <div className="SessionWaitingParticipants">
-        <h2>WaitingParticipants</h2>
+        <h2>Waiting Participants</h2>
         <PlayersIconList players={this.props.participants} />
         {this.props.userIsOwner && (
           <Button onClick={() => this.handleClick()}>Fire the room!</Button>

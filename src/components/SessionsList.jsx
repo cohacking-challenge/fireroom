@@ -14,6 +14,8 @@ class SessionsList extends Component {
       <FireContainer dbRef={this.templatesRef}>
         {templates => (
           <div>
+            <h2>Sessions List</h2>
+
             {templates.map(template => {
               const sessionsRef = this.templatesRef
                 .doc(template.__id)
@@ -28,9 +30,12 @@ class SessionsList extends Component {
                             session.__id
                           }`;
                           return (
-                            <NavLink key={link} to={link}>
-                              {link}
-                            </NavLink>
+                            <div>
+                              {template.name + ': '}
+                              <NavLink key={link} to={link}>
+                                {link}
+                              </NavLink>
+                            </div>
                           );
                         })}
                       </div>

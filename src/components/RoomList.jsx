@@ -7,9 +7,9 @@ import createTemplateWithSession from 'scripts/createTemplateWithSession';
 class RoomList extends Component {
   handleClick(templateId) {
     db
-      .collections('templates')
+      .collection('templates')
       .doc(templateId)
-      .collections('sessions')
+      .collection('sessions')
       .add({
         curStatus: 'waitingParticipants',
         curPageIndex: 0,
@@ -17,7 +17,6 @@ class RoomList extends Component {
       });
   }
   render() {
-    // createTemplateWithSession();
     return (
       <div style={{ textAlign: 'right', display: 'inline-block' }}>
         {this.props.templates.map(template => (
