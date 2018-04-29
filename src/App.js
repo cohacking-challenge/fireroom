@@ -3,11 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import firebase from 'firebase';
 
 import Main from 'views/Main';
-import Room from 'views/Room';
 import Session from 'views/Session';
-import Signup from 'views/Signup';
-import NewTemplate from 'views/NewTemplate';
-import EditTemplate from 'views/EditTemplate';
 import UserContext from 'contexts/UserContext';
 
 import './App.css';

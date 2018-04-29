@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button } from 'antd';
-import { Route, Redirect } from 'react-router';
+import { Form } from 'antd';
 import firebase from 'firebase';
 import firebaseui from 'firebaseui';
 
@@ -53,8 +52,6 @@ class Signup extends Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-
     return (
       <div style={{ marginTop: '25vh' }}>
         <div id="firebaseui-auth-container" />
