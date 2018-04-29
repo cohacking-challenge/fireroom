@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import db from 'backend/db';
-import createTemplateWithSession from 'scripts/createTemplateWithSession';
 
 class RoomList extends Component {
   handleClick(templateId) {
