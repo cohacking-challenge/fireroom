@@ -12,7 +12,7 @@ import questionStatuses from 'enums/questionStatuses';
 
 import './style.css';
 
-const { Content } = Layout;
+const { Content, Header } = Layout;
 
 /**
  * Component to handle all the logic of a Session
@@ -57,6 +57,7 @@ class Session extends Component {
       {
         curStatus,
         curPageStatus: {
+          isScoreCalculated: false,
           questionStatus: questionStatuses[newCurQuestionStatusesIndex],
         },
         curPageIndex: newCurPageIndex,
@@ -96,6 +97,15 @@ class Session extends Component {
     }
   }
 
+  getScore(user, participants) {
+    for (let i = 0; i < participants.length; i++) {
+      if (participants[i].uid === user.uid) {
+        return participants[i].score || 0;
+      }
+    }
+    return 0;
+  }
+
   render() {
     return (
       <Layout className="Session">
@@ -120,7 +130,13 @@ class Session extends Component {
                       session.curStatus === 'over' ||
                       session.curPageIndex >= template.pages.length
                     ) {
-                      return <SessionOver />;
+                      return (
+                        <SessionOver
+                          user={user}
+                          userIsOwner={userIsOwner}
+                          participants={session.participants}
+                        />
+                      );
                     }
 
                     const page = template.pages[session.curPageIndex];
@@ -133,6 +149,13 @@ class Session extends Component {
                         {question => {
                           return (
                             <Fragment>
+                              {!userIsOwner && (
+                                <Header>
+                                  Score:{' '}
+                                  {this.getScore(user, session.participants)}
+                                </Header>
+                              )}
+
                               <Content className="flex">
                                 <QuestionPage
                                   user={user}
@@ -142,8 +165,12 @@ class Session extends Component {
                                   questionStatus={
                                     session.curPageStatus.questionStatus
                                   }
+                                  isScoreCalculated={
+                                    session.curPageStatus.isScoreCalculated
+                                  }
                                   responses={session.responses}
                                   responsesOfQuestion={
+                                    session.responses &&
                                     session.responses[question.__id]
                                   }
                                   participants={session.participants}

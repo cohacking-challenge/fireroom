@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import db from 'backend/db';
 import { Row, Col, Button } from 'antd';
+import { Link } from 'react-router-dom';
 import RoomList from 'components/RoomList';
+import createTemplateWithSession from 'scripts/createTemplateWithSession';
 
 class MyRooms extends Component {
   constructor(props) {
@@ -44,13 +46,23 @@ class MyRooms extends Component {
         </Row>
         <Row>
           <Col span={12} offset={6}>
-            <Button type="primary">Create a new template</Button>
+            <Link to="/new-template" className="ant-btn">
+              Create a new template
+            </Link>
           </Col>
         </Row>
         <br />
         <Row>
           <Col span={12} offset={6}>
-            <h3>Your room templates</h3>
+            <Button onClick={() => createTemplateWithSession()}>
+              Generate a random template
+            </Button>
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col span={12} offset={6}>
+            <h3>My room templates</h3>
           </Col>
         </Row>
         {this.state.templates.length > 0 && (

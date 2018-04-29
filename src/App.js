@@ -3,12 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import firebase from 'firebase';
 
 import Main from 'views/Main';
-import Room from 'views/Room';
 import Session from 'views/Session';
-import Signup from 'views/Signup';
-import NewTemplate from 'views/NewTemplate';
-import EditTemplate from 'views/EditTemplate';
-import MyRooms from 'views/MyRooms';
 import UserContext from 'contexts/UserContext';
 
 import './App.css';
@@ -61,16 +56,11 @@ class App extends Component {
       >
         <div className="App">
           <Switch>
-            <Route exact path="/" component={Main} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/rooms/:roomId" component={Room} />
             <Route
               path="/templates/:templateId/sessions/:sessionId"
               component={Session}
             />
-            <Route path="/new-template" component={NewTemplate} />
-            <Route path="/my-rooms" component={MyRooms} />
-            <Route path="/templates/:templateId" component={EditTemplate} />
+            <Route path="/" component={Main} />
           </Switch>
         </div>
       </UserContext.Provider>

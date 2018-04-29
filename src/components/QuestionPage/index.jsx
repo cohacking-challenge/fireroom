@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AnswerCard from './AnswerCard';
 import PlayersIconList from 'components/PlayersIconList';
+import { JSONDeepCopy } from '../../utils';
 import { Col } from 'antd';
 
 import './style.less';
@@ -16,8 +17,13 @@ class QuestionPage extends Component {
 
   handleClick(answerIndex) {
     if (this.props.userIsOwner) return;
-    // Copy of this.props.responses
-    let newResponses = JSON.parse(JSON.stringify(this.props.responses));
+
+    let newResponses = JSONDeepCopy(this.props.responses);
+
+    if (!newResponses[this.props.question.__id]) {
+      newResponses[this.props.question.__id] = [];
+    }
+
     if (
       !newResponses[this.props.question.__id]
         .map(r => r.uid)
@@ -28,10 +34,67 @@ class QuestionPage extends Component {
         uid: this.props.user.uid,
       });
     }
+
     this.props.sessionRef.set({ responses: newResponses }, { merge: true });
   }
 
+  getParticipantsWhoAnswered() {
+    if (!this.props.responsesOfQuestion) return [];
+    let res = [];
+    for (let iR = 0; iR < this.props.responsesOfQuestion.length; iR++) {
+      for (let iP = 0; iP < this.props.participants.length; iP++) {
+        if (
+          this.props.responsesOfQuestion[iR].uid ===
+          this.props.participants[iP].uid
+        )
+          res.push(this.props.participants[iP]);
+      }
+    }
+    return res;
+  }
+
+  computeNewScore() {
+    if (!this.props.isScoreCalculated) {
+      let newParticipants = JSONDeepCopy(this.props.participants);
+      let scoreForQuestion = 120;
+      let responseLength = this.props.responsesOfQuestion
+        ? this.props.responsesOfQuestion.length
+        : 0;
+      for (let iR = 0; iR < responseLength; iR++) {
+        for (let iP = 0; iP < newParticipants.length; iP++) {
+          // If the current response if from the current participant and the response is correct
+          if (
+            newParticipants[iP].uid ===
+              this.props.responsesOfQuestion[iR].uid &&
+            this.props.question.answers[
+              this.props.responsesOfQuestion[iR].answerIndex
+            ].isCorrect
+          ) {
+            newParticipants[iP].score =
+              (newParticipants[iP].score || 0) + scoreForQuestion;
+            scoreForQuestion = Math.max(100, scoreForQuestion - 10);
+          }
+        }
+      }
+      let curPageStatus = {
+        isScoreCalculated: true,
+        questionStatus: 'showCorrectAnswer',
+      };
+      this.props.sessionRef.set(
+        { curPageStatus, participants: newParticipants },
+        { merge: true },
+      );
+    }
+  }
+
   render() {
+    if (
+      this.props.questionStatus === 'showCorrectAnswer' &&
+      this.props.userIsOwner
+    ) {
+      this.computeNewScore();
+    }
+
     let nbVotersPerAnswer = [];
     if (
       Array.isArray(this.props.question.answers) &&
@@ -45,9 +108,11 @@ class QuestionPage extends Component {
       }
     }
 
-    let userResponseOfQuestion = this.props.responsesOfQuestion.find(
-      response => response.uid === this.props.user.uid,
-    );
+    let userResponseOfQuestion =
+      this.props.responsesOfQuestion &&
+      this.props.responsesOfQuestion.find(
+        response => response.uid === this.props.user.uid,
+      );
     let selectedAnswerIndex;
     if (userResponseOfQuestion)
       selectedAnswerIndex = userResponseOfQuestion.answerIndex;
@@ -101,11 +166,7 @@ class QuestionPage extends Component {
               </Col>
             ))}
         </div>
-        <PlayersIconList
-          players={this.props.participants.filter(p =>
-            this.props.responsesOfQuestion.map(x => x.uid).includes(p.uid),
-          )}
-        />
+        <PlayersIconList players={this.getParticipantsWhoAnswered()} />
       </div>
     );
   }

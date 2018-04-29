@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button } from 'antd';
-import { Route, Redirect } from 'react-router';
+import { Form } from 'antd';
 import firebase from 'firebase';
 import firebaseui from 'firebaseui';
 
@@ -23,7 +22,7 @@ class Signup extends Component {
       },
       // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
       signInFlow: 'popup',
-      signInSuccessUrl: 'http://localhost:3000/',
+      signInSuccessUrl: window.location.origin,
       signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.
         {
@@ -53,30 +52,10 @@ class Signup extends Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-
     return (
-      <div>
-        <Form layout="inline" onSubmit={this.handleSubmit}>
-          <Form.Item>
-            {getFieldDecorator('pin', {
-              rules: [{ required: true, message: 'Please input a pin!' }],
-            })(<Input type="Number" placeholder="Pin" />)}
-          </Form.Item>
-          <Button
-            style={{
-              backgroundColor: 'red',
-              color: 'white',
-              borderColor: 'red',
-            }}
-          >
-            Primary
-          </Button>
-        </Form>
-        <div>
-          <div id="firebaseui-auth-container" />
-          <div id="loader">Loading...</div>
-        </div>
+      <div style={{ marginTop: '25vh' }}>
+        <div id="firebaseui-auth-container" />
+        <div id="loader">Loading...</div>
       </div>
     );
   }

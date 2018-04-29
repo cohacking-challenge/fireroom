@@ -2,7 +2,6 @@ module.exports = {
   '@primary-color': '#EF2B2B',
   '@body-background': '#EF2B2B',
   '@component-background': '#EF2B2B',
-  '@text-color': '#FFFFFF',
   '@text-color-secondary': '#FFFFFF',
   '@heading-color-dark': '#000000',
   '@text-color-dark': '#000000',

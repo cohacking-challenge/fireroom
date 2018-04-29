@@ -9,6 +9,7 @@ function createTemplateWithSession(nbOfQuestions = 10) {
     .doc(templateId)
     .set({
       name: 'Generated Template from scripts',
+      ownerUid: 'aKGJS8UlE4VsREfP3HcKQlvSMnb2', // maxence@ironhack.com
       pages: Array(nbOfQuestions)
         .fill()
         .map((x, i) => ({

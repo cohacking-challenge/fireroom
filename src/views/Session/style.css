@@ -6,3 +6,8 @@
 .Session h1, .Session h2, .Session h3, .Session pre {
   color: white;
 }
+
+.Session .ant-layout-header {
+  color: white;
+  text-align: right;
+}

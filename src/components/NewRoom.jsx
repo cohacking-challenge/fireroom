@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import db from 'backend/db';
-import UserContext from 'contexts/UserContext';
 
 class NewRoom extends Component {
   componentDidMount() {
