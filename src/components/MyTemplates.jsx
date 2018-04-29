@@ -62,7 +62,7 @@ class MyRooms extends Component {
         <br />
         <Row>
           <Col span={12} offset={6}>
-            <h3>Your room templates</h3>
+            <h3>My room templates</h3>
           </Col>
         </Row>
         {this.state.templates.length > 0 && (
